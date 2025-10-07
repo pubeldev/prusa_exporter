@@ -91,11 +91,11 @@ alpha2
 
 alpha3
 - [x] auto enable syslog metrics
-- [ ] create FAQ
-- [ ] ~~check if the address from the udp and prusalink metrics are the same~~ - there is an issue in the firmware. Even though printer should sent metrics via selected network, it can sent them via ESP32 if it's connected. And vice versa - it can sent metrics via Ethernet if the ESP32 is selected as network adapter.
+- [x] create FAQ
+- [x] ~~check if the address from the udp and prusalink metrics are the same~~ - there is an issue in the firmware. Even though printer should sent metrics via selected network, it can sent them via ESP32 if it's connected. And vice versa - it can sent metrics via Ethernet if the ESP32 is selected as network adapter.
 - [ ] ~~compress image of print~~ - expose link to image instead
-- [ ] ~~rename udp metrics~~ - keeping old names for compatibility with metrics_handler
-- [ ] check PrusaLink metrics
+- [x] ~~rename udp metrics~~ - keeping old names for compatibility with metrics_handler
+- [x] check PrusaLink metrics - done by ([imax9000](https://github.com/imax9000)) 
 - [ ] XL dashboard
 
 alpha4
@@ -120,11 +120,11 @@ final
 
 # FAQ
 
-## My printer is correctly connected via Prusa Link API but I got no UDP metrics
+### My printer is correctly connected via Prusa Link API but I got no UDP metrics
 
 After start of the exporter G-Code containing configuration is sent to the printer but it was not probably loaded properly. You can trigger reload by either restart of the exporter or you can run it manually on the printer.
 
-## After expoterer started my printers returned Warning - The G-code isn't fully compatible 
+### After expoterer started my printers returned Warning - The G-code isn't fully compatible 
 
 This is correct - just click on PRINT and that's it. It's possible to technically avoid this but even then you will be informed that G-Code is changing metrics configuration so it's pointless.
 
