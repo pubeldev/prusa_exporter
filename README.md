@@ -90,7 +90,7 @@ alpha2
 - [x] update dashboard for Core One / MK4S
 
 alpha3
-- [ ] auto enable syslog metrics
+- [x] auto enable syslog metrics
 - [ ] check if the address from the udp and prusalink metrics are the same
 - [ ] ~~compress image of print~~ - expose link to image instead
 - [ ] ~~rename udp metrics~~ - keeping old names for compatibility with metrics_handler
