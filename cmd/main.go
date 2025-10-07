@@ -20,6 +20,7 @@ var (
 	metricsPath            = kingpin.Flag("exporter.metrics-path", "Path where to expose Prusa Link metrics.").Default("/metrics/prusalink").String()
 	udpMetricsPath         = kingpin.Flag("exporter.udp-metrics-path", "Path where to expose udp metrics.").Default("/metrics/udp").String()
 	metricsPort            = kingpin.Flag("exporter.metrics-port", "Port where to expose metrics.").Default("10009").Int()
+	ipOverride             = kingpin.Flag("exporter.ip-override", "Override the IP address of the server with this value.").Default("").String()
 	prusaLinkScrapeTimeout = kingpin.Flag("prusalink.scrape-timeout", "Timeout in seconds to scrape prusalink metrics.").Default("10").Int()
 	logLevel               = kingpin.Flag("log.level", "Log level for zerolog.").Default("info").String()
 	syslogListenAddress    = kingpin.Flag("listen-address", "Address where to expose port for gathering metrics. - format <address>:<port>").Default("0.0.0.0:8514").String()
@@ -42,7 +43,7 @@ func Run() {
 
 	log.Info().Msg("Loading configuration file: " + *configFile)
 
-	config, err := config.LoadConfig(*configFile, *prusaLinkScrapeTimeout)
+	config, err := config.LoadConfig(*configFile, *prusaLinkScrapeTimeout, *ipOverride)
 
 	if err != nil {
 		log.Panic().Msg("Error loading configuration file " + err.Error())
@@ -59,6 +60,7 @@ func Run() {
 
 	log.Info().Msg("PrusaLink metrics enabled!")
 	collectors = append(collectors, prusalink.NewCollector(config))
+	prusalink.EnableUDPmetrics(config.Printers)
 
 	// starting syslog server
 
