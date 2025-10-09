@@ -62,7 +62,7 @@ var (
 	}
 )
 
-// getLocalIP finds and returns the first non-loopback local IP address.
+// getLocalIP finds and returns the first ethernet or WiFi IP address, avoiding Docker interfaces.
 func getLocalIP() (string, error) {
 
 	if configuration.Exporter.IpOverride != "" {
@@ -74,8 +74,39 @@ func getLocalIP() (string, error) {
 		return "", err
 	}
 
+	// Helper function to check if interface name suggests it's ethernet or WiFi
+	isPreferredInterface := func(name string) bool {
+		name = strings.ToLower(name)
+		// Common ethernet interface names
+		if strings.HasPrefix(name, "eth") || strings.HasPrefix(name, "en") ||
+			strings.HasPrefix(name, "eno") || strings.HasPrefix(name, "enp") ||
+			strings.HasPrefix(name, "ens") || strings.HasPrefix(name, "enx") {
+			return true
+		}
+		// Common WiFi interface names
+		if strings.HasPrefix(name, "wlan") || strings.HasPrefix(name, "wlp") ||
+			strings.HasPrefix(name, "wl") || strings.HasPrefix(name, "wifi") {
+			return true
+		}
+		return false
+	}
+
+	// Helper function to check if interface should be avoided (Docker, etc.)
+	isAvoidedInterface := func(name string) bool {
+		name = strings.ToLower(name)
+		return strings.HasPrefix(name, "docker") || strings.HasPrefix(name, "br-") ||
+			strings.HasPrefix(name, "veth") || name == "bridge0"
+	}
+
+	var fallbackIP string
+
+	// First pass: look for preferred interfaces (ethernet/WiFi)
 	for _, iface := range interfaces {
 		if iface.Flags&net.FlagUp == 0 || iface.Flags&net.FlagLoopback != 0 {
+			continue
+		}
+
+		if isAvoidedInterface(iface.Name) {
 			continue
 		}
 
@@ -99,10 +130,24 @@ func getLocalIP() (string, error) {
 
 			ip = ip.To4()
 			if ip != nil {
-				return ip.String(), nil
+				ipStr := ip.String()
+				if isPreferredInterface(iface.Name) {
+					// Found preferred interface, return immediately
+					return ipStr, nil
+				}
+				// Keep as fallback if no preferred interface found
+				if fallbackIP == "" {
+					fallbackIP = ipStr
+				}
 			}
 		}
 	}
+
+	// If we found a fallback IP (non-Docker, non-preferred), use it
+	if fallbackIP != "" {
+		return fallbackIP, nil
+	}
+
 	return "", fmt.Errorf("could not find a valid local IP address")
 }
 
