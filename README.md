@@ -85,11 +85,12 @@ alpha3
 - [x] ~~compress image of print~~ - just use Loki for image
 - [x] ~~rename udp metrics~~ - keeping old names for compatibility with metrics_handler
 - [x] check PrusaLink metrics - done by ([imax9000](https://github.com/imax9000)) 
-- [ ] XL dashboard
 
 alpha4
-- [x] ~~PoC controlling printer via Grafana~~ - PoC work but it's flawed - scrapping
+- [ ] further optimization
+- [x] ~~PoC controlling printer via Grafana~~ - PoC work but it's flawed - scrapping - [prusa_proxy](https://github.com/pubeldev/prusa_proxy)
 - [ ] Mini dashboard
+- [ ] XL dashboard
 
 beta1
 - [x] ~~start testing at Raspberry Pi 4 (if not feasible then 5)~~ - not going to build Raspberry Pi image
