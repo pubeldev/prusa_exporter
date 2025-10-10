@@ -200,17 +200,28 @@ func TestGetStateFlag(t *testing.T) {
 func TestAccessPrinterEndpoint(t *testing.T) {
 	// Create a test server
 	testServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// Check for basic auth
-		username, password, ok := r.BasicAuth()
-		if !ok {
-			// Check for API key in X-Api-Key header
-			if apiKey := r.Header.Get("X-Api-Key"); apiKey == "" {
+		// Check for API key first
+		if apiKey := r.Header.Get("X-Api-Key"); apiKey != "" {
+			// API key authentication
+			if apiKey != "test_api_key" {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
 		} else {
-			// Validate basic auth credentials
-			if username != "test_user" || password != "test_pass" {
+			// For digest auth, respond with 401 and digest challenge on first request
+			auth := r.Header.Get("Authorization")
+			if auth == "" {
+				w.Header().Set("WWW-Authenticate", `Digest realm="Test", qop="auth", nonce="dcd98b7102dd2f0e8b11d0f600bfb0c093", opaque="5ccc069c403ebaf9f0171e9517f40e41"`)
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+			// For test purposes, check if this contains wrong credentials
+			if strings.Contains(auth, "wrong_user") || strings.Contains(auth, "wrong_pass") {
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+			// Accept any other digest auth response with valid format
+			if !strings.Contains(auth, "Digest") {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
@@ -329,7 +340,7 @@ func TestAccessPrinterEndpoint(t *testing.T) {
 			}
 
 			if string(result) != tt.expectedData {
-				t.Errorf("accessPrinterEndpoint() = %s, expected %s", string(result), tt.expectedData)
+				t.Errorf("accessPrinterEndpoint() = '%s' (len=%d), expected '%s' (len=%d)", string(result), len(result), tt.expectedData, len(tt.expectedData))
 			}
 		})
 	}
@@ -362,7 +373,7 @@ func TestPrinterTypes(t *testing.T) {
 func TestHTTPTimeouts(t *testing.T) {
 	// Create a test server that delays responses
 	testServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		time.Sleep(2 * time.Second) // Delay longer than timeout
+		time.Sleep(6 * time.Second) // Delay longer than timeout (5 * 1 = 5 seconds)
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(`{"status":"ok"}`))
 	}))
@@ -396,10 +407,12 @@ func TestHTTPTimeouts(t *testing.T) {
 	_, err := accessPrinterEndpoint("/api/v1/status", printer)
 	if err == nil {
 		t.Error("accessPrinterEndpoint() should timeout but didn't")
+		return
 	}
 
 	// Check that error is timeout-related
-	if !strings.Contains(err.Error(), "timeout") && !strings.Contains(err.Error(), "context deadline exceeded") {
+	errMsg := err.Error()
+	if !strings.Contains(errMsg, "timeout") && !strings.Contains(errMsg, "context deadline exceeded") && !strings.Contains(errMsg, "Timeout exceeded") {
 		t.Errorf("Expected timeout error, got: %v", err)
 	}
 

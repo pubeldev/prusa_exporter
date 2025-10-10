@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"image"
 	"image/png"
 	"io"
@@ -129,6 +130,13 @@ func accessPrinterEndpoint(path string, printer config.Printers) ([]byte, error)
 			return result, err
 		}
 	}
+
+	// Check for HTTP error status codes
+	if res.StatusCode >= 400 {
+		res.Body.Close()
+		return nil, fmt.Errorf("HTTP error: %d %s", res.StatusCode, res.Status)
+	}
+
 	result, err = io.ReadAll(res.Body)
 	res.Body.Close()
 

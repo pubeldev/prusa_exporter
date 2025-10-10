@@ -22,24 +22,42 @@ type Collector struct {
 type MetricName string
 
 const (
-	MetricPrinterTemp                MetricName = "prusa_temperature_celsius"
-	MetricPrinterTempTarget                     = "prusa_temperature_target_celsius"
-	MetricPrinterPrintTimeRemaining             = "prusa_printing_time_remaining_seconds"
-	MetricPrinterPrintProgressRatio             = "prusa_printing_progress_ratio"
-	MetricPrinterFiles                          = "prusa_files_count"
-	MetricPrinterMaterial                       = "prusa_material_info"
-	MetricPrinterPrintTime                      = "prusa_print_time_seconds"
-	MetricPrinterUp                             = "prusa_up"
-	MetricPrinterNozzleSize                     = "prusa_nozzle_size_meters"
-	MetricPrinterStatus                         = "prusa_status_info"
-	MetricPrinterAxis                           = "prusa_axis"
-	MetricPrinterFlow                           = "prusa_print_flow_ratio"
-	MetricPrinterInfo                           = "prusa_info"
-	MetricPrinterMMU                            = "prusa_mmu"
-	MetricPrinterFanSpeedRpm                    = "prusa_fan_speed_rpm"
-	MetricPrinterPrintSpeedRatio                = "prusa_print_speed_ratio"
-	MetricPrinterCurrentJob                     = "prusa_job"
-	MetricPrinterUDPMetricsGcodeSent            = "prusa_udp_metrics_gcode_sent"
+	// MetricPrinterTemp represents the printer temperature metric name
+	MetricPrinterTemp MetricName = "prusa_temperature_celsius"
+	// MetricPrinterTempTarget represents the printer target temperature metric name
+	MetricPrinterTempTarget = "prusa_temperature_target_celsius"
+	// MetricPrinterPrintTimeRemaining represents the remaining print time metric name
+	MetricPrinterPrintTimeRemaining = "prusa_printing_time_remaining_seconds"
+	// MetricPrinterPrintProgressRatio represents the print progress ratio metric name
+	MetricPrinterPrintProgressRatio = "prusa_printing_progress_ratio"
+	// MetricPrinterFiles represents the files count metric name
+	MetricPrinterFiles = "prusa_files_count"
+	// MetricPrinterMaterial represents the material info metric name
+	MetricPrinterMaterial = "prusa_material_info"
+	// MetricPrinterPrintTime represents the print time metric name
+	MetricPrinterPrintTime = "prusa_print_time_seconds"
+	// MetricPrinterUp represents the printer up status metric name
+	MetricPrinterUp = "prusa_up"
+	// MetricPrinterNozzleSize represents the nozzle size metric name
+	MetricPrinterNozzleSize = "prusa_nozzle_size_meters"
+	// MetricPrinterStatus represents the printer status metric name
+	MetricPrinterStatus = "prusa_status_info"
+	// MetricPrinterAxis represents the printer axis metric name
+	MetricPrinterAxis = "prusa_axis"
+	// MetricPrinterFlow represents the print flow ratio metric name
+	MetricPrinterFlow = "prusa_print_flow_ratio"
+	// MetricPrinterInfo represents the printer info metric name
+	MetricPrinterInfo = "prusa_info"
+	// MetricPrinterMMU represents the MMU metric name
+	MetricPrinterMMU = "prusa_mmu"
+	// MetricPrinterFanSpeedRpm represents the fan speed RPM metric name
+	MetricPrinterFanSpeedRpm = "prusa_fan_speed_rpm"
+	// MetricPrinterPrintSpeedRatio represents the print speed ratio metric name
+	MetricPrinterPrintSpeedRatio = "prusa_print_speed_ratio"
+	// MetricPrinterCurrentJob represents the current job metric name
+	MetricPrinterCurrentJob = "prusa_job"
+	// MetricPrinterUDPMetricsGcodeSent represents the UDP metrics gcode sent metric name
+	MetricPrinterUDPMetricsGcodeSent = "prusa_udp_metrics_gcode_sent"
 )
 
 type metricDesc struct {
@@ -107,11 +125,11 @@ func NewCollector(config config.Config) *Collector {
 }
 
 // Describe implements prometheus.Collector
-func (collector *Collector) Describe(ch chan<- *prometheus.Desc) {
-	// Iterating over metrics instead of collector.metricDesc just to
+func (c *Collector) Describe(ch chan<- *prometheus.Desc) {
+	// Iterating over metrics instead of c.metricDesc just to
 	// preserve ordering. Not that it matters, but still.
 	for _, m := range metrics {
-		ch <- collector.metricDesc[m.Name]
+		ch <- c.metricDesc[m.Name]
 	}
 }
 
