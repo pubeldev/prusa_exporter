@@ -99,7 +99,7 @@ func updateMetric(splitted []string, prefix string, mac string, ip string) ([]st
 		return nil, fmt.Errorf("splitted message is empty")
 	}
 
-	splitted[0] = fmt.Sprintf("%s%s,mac=%s,ip=%s", prefix, splitted[0], mac, strings.Split(ip, ":")[0])
+	splitted[0] = fmt.Sprintf("%s%s,printer_mac=%s,printer_address=%s", prefix, splitted[0], mac, strings.Split(ip, ":")[0])
 	return splitted, nil
 }
 

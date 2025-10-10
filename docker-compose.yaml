@@ -4,14 +4,15 @@ networks:
 volumes:
   grafana_data:
   prometheus_data:
+  loki_data:
 
 services:
   grafana:
-    image: grafana/grafana:12.0.1
+    image: grafana/grafana:12.2
     container_name: grafana
     restart: unless-stopped
     environment:
-      - GF_INSTALL_PLUGINS=grafana-xyzchart-panel, grafana-polystat-panel, yesoreyeram-infinity-datasource, volkovlabs-image-panel, betatech-qrcode-panel
+      - GF_INSTALL_PLUGINS=dalvany-image-panel, grafana-xyzchart-panel, grafana-polystat-panel, yesoreyeram-infinity-datasource, volkovlabs-image-panel, betatech-qrcode-panel
     depends_on:
       - prometheus
     ports:
@@ -24,13 +25,14 @@ services:
       - ./docs/config/grafana/dashboards:/var/lib/grafana/dashboards
 
   exporter:
-    image: pubeldev/prusa_exporter:2.0.0-alpha2
-    #build: .
+    #image: pubeldev/prusa_exporter:2.0.0-alpha2
+    build: .
     container_name: exporter
     restart: unless-stopped
     volumes:
       - type: bind
         source: ./prusa.yml
+        #source: ./docs/config/prusa.yml
         target: /app/prusa.yml
     ports:
       - "10009:10009"
@@ -39,13 +41,16 @@ services:
       - "--config.file=/app/prusa.yml"
       - "--log.level=info"
       - "--prusalink.scrape-timeout=5"
+      - "--udp.ip-override=${HOST_IP}"
+      - "--no-udp.gcode-enabled"
+      - "--loki.push-url=http://loki:3100/loki/api/v1/push"
     depends_on:
       - prometheus
     networks:
       - pubel
  
   prometheus:
-    image: prom/prometheus:v3.4.0
+    image: prom/prometheus:v3.6.0
     container_name: prometheus
     restart: always
     command:
@@ -56,5 +61,18 @@ services:
       - prometheus_data:/prometheus
     ports:
       - "9090:9090"
+    networks:
+      - pubel
+
+  loki:
+    image: grafana/loki:3.5.5
+    container_name: loki
+    restart: unless-stopped
+    command: -config.file=/etc/loki/loki.yaml
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./docs/config/loki.yaml:/etc/loki/loki.yaml
+      - loki_data:/loki
     networks:
       - pubel

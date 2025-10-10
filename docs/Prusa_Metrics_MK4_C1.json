@@ -1,3020 +1,3229 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_MIMIR",
-      "label": "Mimir",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    },
-    {
-      "name": "DS_PROMETHEUS",
-      "label": "Prometheus",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "panel",
-      "id": "bargauge",
-      "name": "Bar gauge",
-      "version": ""
-    },
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "12.0.1"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "stat",
-      "name": "Stat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "volkovlabs-image-panel",
-      "name": "Business Media",
-      "version": "6.3.0"
-    }
-  ],
-  "annotations": {
-    "list": [
+  "apiVersion": "dashboard.grafana.app/v2beta1",
+  "kind": "Dashboard",
+  "metadata": {
+    "name": "48b0d43b-c201-4bc2-8f85-1b707838e1b0",
+    "generation": 72,
+    "creationTimestamp": "2025-05-12T14:05:14Z",
+    "labels": {},
+    "annotations": {}
+  },
+  "spec": {
+    "annotations": [
       {
-        "builtIn": 1,
-        "datasource": {
-          "type": "grafana",
-          "uid": "-- Grafana --"
-        },
-        "enable": true,
-        "hide": true,
-        "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations & Alerts",
-        "type": "dashboard"
+        "kind": "AnnotationQuery",
+        "spec": {
+          "builtIn": true,
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "query": {
+            "group": "grafana",
+            "kind": "DataQuery",
+            "spec": {},
+            "version": "v0"
+          }
+        }
+      }
+    ],
+    "cursorSync": "Crosshair",
+    "editable": true,
+    "elements": {
+      "panel-10": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "code",
+                        "expr": "avg by (printer_address) (prusa_temp_noz{printer_address=\"$ip\"}) or avg by (printer_address) (prusa_temperature_celsius{printer_address=\"$ip\", printer_heated_element=\"tool0\"})",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "interval": "1s",
+                        "legendFormat": "Nozzle",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "prusa_temp_hbr{printer_address=\"$ip\", a=\"0\"}",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "interval": "1s",
+                        "legendFormat": "Heatbreak - extruder {{n}}",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "B"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "code",
+                        "expr": "avg by (printer_address) (prusa_temp_bed{printer_address=\"$ip\"}) or avg by (printer_address) (prusa_temperature_celsius{printer_address=\"$ip\", printer_heated_element=\"bed\"})",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "interval": "1s",
+                        "legendFormat": "Heatbed",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "C"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "prusa_temp_mcu{printer_address=\"$ip\"}",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "interval": "1s",
+                        "legendFormat": "MCU",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "E"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "prusa_chamber_temp{printer_address=\"$ip\"}",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "interval": "1s",
+                        "legendFormat": "Chamber",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "D"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "builder",
+                        "expr": "prusa_temp_brd{printer_address=\"$ip\"}",
+                        "instant": false,
+                        "legendFormat": "xBuddy",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "F"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "builder",
+                        "expr": "prusa_temp_hbr{printer_address=\"$ip\"}",
+                        "instant": false,
+                        "legendFormat": "Heatbreak",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "G"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "interval": "15s"
+              },
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 10,
+          "links": [],
+          "title": "Temperatures",
+          "vizConfig": {
+            "group": "bargauge",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "max": 300,
+                  "min": 0,
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "#EAB839",
+                        "value": 280
+                      },
+                      {
+                        "color": "red",
+                        "value": 290
+                      }
+                    ]
+                  },
+                  "unit": "celsius"
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byFrameRefID",
+                      "options": "B"
+                    },
+                    "properties": [
+                      {
+                        "id": "thresholds",
+                        "value": {
+                          "mode": "absolute",
+                          "steps": [
+                            {
+                              "color": "green",
+                              "value": 0
+                            },
+                            {
+                              "color": "yellow",
+                              "value": 60
+                            },
+                            {
+                              "color": "red",
+                              "value": 80
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "id": "max",
+                        "value": 100
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byFrameRefID",
+                      "options": "C"
+                    },
+                    "properties": [
+                      {
+                        "id": "thresholds",
+                        "value": {
+                          "mode": "absolute",
+                          "steps": [
+                            {
+                              "color": "green",
+                              "value": 0
+                            },
+                            {
+                              "color": "#EAB839",
+                              "value": 100
+                            },
+                            {
+                              "color": "red",
+                              "value": 110
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "id": "max",
+                        "value": 120
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "prusa_chamber_temp"
+                    },
+                    "properties": [
+                      {
+                        "id": "min",
+                        "value": 0
+                      },
+                      {
+                        "id": "max",
+                        "value": 100
+                      },
+                      {
+                        "id": "thresholds",
+                        "value": {
+                          "mode": "absolute",
+                          "steps": [
+                            {
+                              "color": "green",
+                              "value": 0
+                            },
+                            {
+                              "color": "#EAB839",
+                              "value": 60
+                            },
+                            {
+                              "color": "red",
+                              "value": 80
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "prusa_temp_mcu"
+                    },
+                    "properties": [
+                      {
+                        "id": "min",
+                        "value": 0
+                      },
+                      {
+                        "id": "max",
+                        "value": 105
+                      },
+                      {
+                        "id": "thresholds",
+                        "value": {
+                          "mode": "absolute",
+                          "steps": [
+                            {
+                              "color": "green",
+                              "value": 0
+                            },
+                            {
+                              "color": "#EAB839",
+                              "value": 70
+                            },
+                            {
+                              "color": "red",
+                              "value": 90
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "displayMode": "lcd",
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": false
+                },
+                "maxVizHeight": 300,
+                "minVizHeight": 41,
+                "minVizWidth": 8,
+                "namePlacement": "top",
+                "orientation": "horizontal",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showUnfilled": true,
+                "sizing": "auto",
+                "valueMode": "color"
+              }
+            },
+            "version": "12.2.0"
+          }
+        }
+      },
+      "panel-12": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "avg by(printer_name) (prusa_info{printer_address=\"$ip\"})",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "legendFormat": "{{printer_job_name}}",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "hideTimeOverride": true,
+                "interval": "10s",
+                "timeFrom": "10s"
+              },
+              "transformations": [
+                {
+                  "kind": "renameByRegex",
+                  "spec": {
+                    "id": "renameByRegex",
+                    "options": {
+                      "regex": "Value",
+                      "renamePattern": "None"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 12,
+          "links": [],
+          "title": "Printer Name",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "orange",
+                    "mode": "fixed"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "name",
+                "wideLayout": true
+              }
+            },
+            "version": "12.2.0"
+          }
+        }
+      },
+      "panel-14": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "code",
+                        "expr": "(avg by (printer_address) (prusa_temp_bed{printer_address=\"$ip\"}) and on(printer_address) (changes(prusa_temp_bed{printer_address=\"$ip\"}[30s]) > 0))\nor\n(avg by (printer_address) (prusa_temperature_celsius{printer_address=\"$ip\", printer_heated_element=\"bed\"}))",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "interval": "1s",
+                        "legendFormat": "Actual",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "B"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "code",
+                        "expr": "(avg by (printer_address) (prusa_ttemp_bed{printer_address=\"$ip\"}) and on(printer_address) (changes(prusa_ttemp_bed{printer_address=\"$ip\"}[30s]) > 0))\nor\n(avg by (printer_address) (prusa_temperature_target_celsius{printer_address=\"$ip\", printer_heated_element=\"bed\"}))",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "interval": "1s",
+                        "legendFormat": "Target",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "C"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "interval": "15s"
+              },
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 14,
+          "links": [],
+          "title": "Temperature - Heatbed",
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds",
+                    "seriesBy": "last"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 0,
+                    "gradientMode": "scheme",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineStyle": {
+                      "fill": "solid"
+                    },
+                    "lineWidth": 1,
+                    "pointSize": 3,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "never",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "decimals": 2,
+                  "fieldMinMax": false,
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  "unit": "celsius"
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Target"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "red",
+                          "mode": "fixed"
+                        }
+                      },
+                      {
+                        "id": "custom.lineWidth",
+                        "value": 1
+                      },
+                      {
+                        "id": "custom.lineStyle",
+                        "value": {
+                          "dash": [
+                            10,
+                            10
+                          ],
+                          "fill": "dash"
+                        }
+                      },
+                      {
+                        "id": "custom.gradientMode",
+                        "value": "none"
+                      },
+                      {
+                        "id": "custom.fillOpacity",
+                        "value": 5
+                      },
+                      {
+                        "id": "custom.fillBelowTo",
+                        "value": "Actual"
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Actual"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.fillBelowTo",
+                        "value": "Target"
+                      },
+                      {
+                        "id": "custom.fillOpacity",
+                        "value": 5
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "legend": {
+                  "calcs": [
+                    "max",
+                    "mean",
+                    "min",
+                    "lastNotNull"
+                  ],
+                  "displayMode": "table",
+                  "placement": "bottom",
+                  "showLegend": true,
+                  "sortBy": "Name",
+                  "sortDesc": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "12.2.0"
+          }
+        }
+      },
+      "panel-16": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "exemplar": false,
+                        "expr": "avg by(printer_model) (prusa_info{printer_address=\"$ip\"})",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "interval": "1s",
+                        "legendFormat": "{{serial_number}}",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "hideTimeOverride": true,
+                "interval": "15s",
+                "timeFrom": "1s"
+              },
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 16,
+          "links": [],
+          "title": "Printer Model",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "name",
+                "wideLayout": true
+              }
+            },
+            "version": "12.2.0"
+          }
+        }
+      },
+      "panel-17": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "rate(prusa_eth_out_sent{printer_address=\"$ip\"}[$__rate_interval])",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "interval": "1s",
+                        "legendFormat": "Ethernet Out",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "rate(prusa_eth_in_recv{printer_address=\"$ip\"}[$__rate_interval])",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "interval": "1s",
+                        "legendFormat": "Ethernet In",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "B"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "expr": "rate(prusa_esp_in_recv{printer_address=\"$ip\"}[$__rate_interval])",
+                        "instant": false,
+                        "legendFormat": "ESP In",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "C"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "expr": "rate(prusa_esp_out_sent{printer_address=\"$ip\"}[$__rate_interval])",
+                        "instant": false,
+                        "legendFormat": "ESP Out",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "D"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "interval": "15s"
+              },
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 17,
+          "links": [],
+          "title": "Network activity",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "dark-green",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  "unit": "binbps"
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "vertical",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "value_and_name",
+                "wideLayout": true
+              }
+            },
+            "version": "12.2.0"
+          }
+        }
+      },
+      "panel-19": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "exemplar": false,
+                        "expr": "max by(printer_filament) (prusa_material_info{printer_address=\"$ip\"})",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "instant": true,
+                        "legendFormat": "{{printer_filament}}",
+                        "range": false,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "hideTimeOverride": true,
+                "interval": "10s",
+                "timeFrom": "10s"
+              },
+              "transformations": [
+                {
+                  "kind": "renameByRegex",
+                  "spec": {
+                    "id": "renameByRegex",
+                    "options": {
+                      "regex": "Value",
+                      "renamePattern": "None"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 19,
+          "links": [],
+          "title": "Filament",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "green",
+                    "mode": "fixed"
+                  },
+                  "mappings": [
+                    {
+                      "options": {
+                        "PC": {
+                          "color": "dark-green",
+                          "index": 1
+                        },
+                        "PETG": {
+                          "color": "#fc6d09",
+                          "index": 2
+                        },
+                        "PLA": {
+                          "color": "dark-blue",
+                          "index": 0
+                        }
+                      },
+                      "type": "value"
+                    }
+                  ],
+                  "noValue": "PLA",
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "last"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "name",
+                "wideLayout": true
+              }
+            },
+            "version": "12.2.0"
+          }
+        }
+      },
+      "panel-21": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "avg by(printer_state) (prusa_status_info{printer_address=\"$ip\"})",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "legendFormat": "__auto",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "hideTimeOverride": true,
+                "interval": "10s",
+                "timeFrom": "10s"
+              },
+              "transformations": [
+                {
+                  "kind": "renameByRegex",
+                  "spec": {
+                    "id": "renameByRegex",
+                    "options": {
+                      "regex": "Value",
+                      "renamePattern": "None"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 21,
+          "links": [],
+          "title": "Status",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "orange",
+                    "mode": "palette-classic"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "last"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "name",
+                "wideLayout": true
+              }
+            },
+            "version": "12.2.0"
+          }
+        }
+      },
+      "panel-22": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "prusa_printing_time_remaining_seconds{printer_address=\"$ip\", printer_job_name!=\"\"}",
+                        "format": "table",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "instant": true,
+                        "interval": "1s",
+                        "legendFormat": "__auto",
+                        "range": false,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "e"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 22,
+          "links": [],
+          "title": "Remaining time",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "green",
+                    "mode": "fixed"
+                  },
+                  "fieldMinMax": true,
+                  "noValue": "Not printing",
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  "unit": "s"
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              }
+            },
+            "version": "12.2.0"
+          }
+        }
+      },
+      "panel-24": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "prusa_nozzle_size_meters{printer_address=\"$ip\"}",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "interval": "1s",
+                        "legendFormat": "{{serial_number}}",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "hideTimeOverride": true,
+                "interval": "15s",
+                "timeFrom": "1s"
+              },
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 24,
+          "links": [],
+          "title": "Nozzle Size",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "decimals": 2,
+                  "mappings": [
+                    {
+                      "options": {
+                        "0": {
+                          "color": "yellow",
+                          "index": 0,
+                          "text": "Deactivated"
+                        },
+                        "1": {
+                          "index": 1,
+                          "text": "Active"
+                        }
+                      },
+                      "type": "value"
+                    }
+                  ],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  "unit": "mm"
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "value",
+                "wideLayout": true
+              }
+            },
+            "version": "12.2.0"
+          }
+        }
+      },
+      "panel-30": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "code",
+                        "expr": "abs(prusa_curr_inp{printer_address=\"$ip\"}) * 24\n  * on(printer_address) group_left(printer_model)\n    prusa_info{printer_address=\"$ip\", printer_model=\"Core One\"}\n",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "interval": "1s",
+                        "legendFormat": "Watts",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "expr": "240 - abs(prusa_curr_inp{printer_address=\"$ip\"}) * 24\n  * on(printer_address) group_left(printer_model)\n    prusa_info{printer_address=\"$ip\", printer_model!=\"Core One\"}\n",
+                        "instant": false,
+                        "legendFormat": "__auto",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "B"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "It is not known if data are correct at this moment",
+          "id": 30,
+          "links": [],
+          "title": "Power consumption",
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "#fc6d09",
+                    "mode": "continuous-GrYlRd",
+                    "seriesBy": "last"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 5,
+                    "gradientMode": "scheme",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineStyle": {
+                      "fill": "solid"
+                    },
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": true,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "normal"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "max": 300,
+                  "min": 0,
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "#ff6e07",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  "unit": "watt"
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Bed"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "yellow",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "5V Rail"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "orange",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "legend": {
+                  "calcs": [
+                    "max",
+                    "mean",
+                    "min"
+                  ],
+                  "displayMode": "table",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "12.2.0"
+          }
+        }
+      },
+      "panel-33": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "exemplar": false,
+                        "expr": "prusa_status_info{printer_address=\"$ip\"} == 4",
+                        "format": "time_series",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "instant": true,
+                        "legendFormat": "{{printer_job_name}}",
+                        "range": false,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "hideTimeOverride": true,
+                "interval": "10s",
+                "timeFrom": "10s"
+              },
+              "transformations": [
+                {
+                  "kind": "renameByRegex",
+                  "spec": {
+                    "id": "renameByRegex",
+                    "options": {
+                      "regex": "Value",
+                      "renamePattern": "None"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 33,
+          "links": [],
+          "title": "",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "orange",
+                    "mode": "fixed"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "none",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "text": {},
+                "textMode": "name",
+                "wideLayout": true
+              }
+            },
+            "version": "12.2.0"
+          }
+        }
+      },
+      "panel-34": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "prusa_print_speed_ratio{printer_address=\"$ip\"}",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "legendFormat": "__auto",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "hideTimeOverride": true,
+                "timeFrom": "10s"
+              },
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 34,
+          "links": [],
+          "title": "Print Speed",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "percentunit"
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "value",
+                "wideLayout": true
+              }
+            },
+            "version": "12.2.0"
+          }
+        }
+      },
+      "panel-37": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "prusa_printing_progress_ratio{printer_address=\"$ip\"}",
+                        "format": "table",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "instant": true,
+                        "interval": "1s",
+                        "legendFormat": "__auto",
+                        "range": false,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "e"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 37,
+          "links": [],
+          "title": "Progress",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "green",
+                    "mode": "fixed"
+                  },
+                  "fieldMinMax": true,
+                  "noValue": "Not printing",
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  "unit": "percentunit"
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              }
+            },
+            "version": "12.2.0"
+          }
+        }
+      },
+      "panel-38": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "builder",
+                        "expr": "prusa_info{printer_address=\"$ip\"}",
+                        "legendFormat": "{{printer_hostname}}",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 38,
+          "links": [],
+          "title": "Hostname",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "mappings": [
+                    {
+                      "options": {
+                        "6": {
+                          "color": "#F2495C",
+                          "index": 0,
+                          "text": "None"
+                        }
+                      },
+                      "type": "value"
+                    }
+                  ],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "name",
+                "wideLayout": true
+              }
+            },
+            "version": "12.2.0"
+          }
+        }
+      },
+      "panel-39": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "code",
+                        "expr": "(avg by (printer_address) (prusa_temp_noz{printer_address=\"$ip\"}) and on(printer_address) (changes(prusa_temp_noz{printer_address=\"$ip\"}[30s]) > 0))\nor\n(avg by (printer_address) (prusa_temperature_celsius{printer_address=\"$ip\", printer_heated_element=\"tool0\"}))",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "interval": "1s",
+                        "legendFormat": "Actual",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "B"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "code",
+                        "expr": "(avg by (printer_address) (prusa_ttemp_noz{printer_address=\"$ip\"}) and on(printer_address) (changes(prusa_ttemp_noz{printer_address=\"$ip\"}[30s]) > 0))\nor\n(avg by (printer_address) (prusa_temperature_target_celsius{printer_address=\"$ip\", printer_heated_element=\"tool0\"}))",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "interval": "1s",
+                        "legendFormat": "Target",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "C"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "interval": "15s"
+              },
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 39,
+          "links": [],
+          "title": "Temperature - Nozzle $adjusted_active_extruder",
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds",
+                    "seriesBy": "last"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 0,
+                    "gradientMode": "scheme",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineStyle": {
+                      "fill": "solid"
+                    },
+                    "lineWidth": 1,
+                    "pointSize": 3,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "never",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "decimals": 2,
+                  "fieldMinMax": false,
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  "unit": "celsius"
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Target"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "red",
+                          "mode": "fixed"
+                        }
+                      },
+                      {
+                        "id": "custom.lineWidth",
+                        "value": 1
+                      },
+                      {
+                        "id": "custom.lineStyle",
+                        "value": {
+                          "dash": [
+                            10,
+                            10
+                          ],
+                          "fill": "dash"
+                        }
+                      },
+                      {
+                        "id": "custom.gradientMode",
+                        "value": "none"
+                      },
+                      {
+                        "id": "custom.fillOpacity",
+                        "value": 5
+                      },
+                      {
+                        "id": "custom.fillBelowTo",
+                        "value": "Value"
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Actual"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.fillBelowTo",
+                        "value": "Target"
+                      },
+                      {
+                        "id": "custom.fillOpacity",
+                        "value": 5
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "legend": {
+                  "calcs": [
+                    "max",
+                    "mean",
+                    "min",
+                    "lastNotNull"
+                  ],
+                  "displayMode": "table",
+                  "placement": "bottom",
+                  "showLegend": true,
+                  "sortBy": "Name",
+                  "sortDesc": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "12.2.0"
+          }
+        }
+      },
+      "panel-42": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "max by(printer_name) (prusa_mmu{printer_address=\"$ip\"})",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "legendFormat": "__auto",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 42,
+          "links": [],
+          "title": "MMU status",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "mappings": [
+                    {
+                      "options": {
+                        "0": {
+                          "color": "red",
+                          "index": 0,
+                          "text": "Disabled"
+                        },
+                        "1": {
+                          "color": "green",
+                          "index": 1,
+                          "text": "Enabled"
+                        }
+                      },
+                      "type": "value"
+                    }
+                  ],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              }
+            },
+            "version": "12.2.0"
+          }
+        }
+      },
+      "panel-43": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "prusa_cpu_usage{printer_address=\"$ip\"}",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "legendFormat": "%",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "expr": "vector(100)",
+                        "instant": false,
+                        "legendFormat": "__auto",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "B"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 43,
+          "links": [],
+          "title": "CPU Usage",
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 18,
+                    "gradientMode": "hue",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineStyle": {
+                      "fill": "solid"
+                    },
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "never",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "fieldMinMax": false,
+                  "max": 100,
+                  "min": 0,
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "red",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 100
+                      }
+                    ]
+                  },
+                  "unit": "percent"
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byFrameRefID",
+                      "options": "B"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.hideFrom",
+                        "value": {
+                          "legend": true,
+                          "tooltip": true,
+                          "viz": false
+                        }
+                      },
+                      {
+                        "id": "custom.fillBelowTo",
+                        "value": "%"
+                      },
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "dark-red",
+                          "mode": "shades"
+                        }
+                      },
+                      {
+                        "id": "custom.drawStyle",
+                        "value": "line"
+                      },
+                      {
+                        "id": "custom.gradientMode",
+                        "value": "opacity"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "legend": {
+                  "calcs": [
+                    "max",
+                    "mean",
+                    "min"
+                  ],
+                  "displayMode": "table",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "12.2.0"
+          }
+        }
+      },
+      "panel-44": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "code",
+                        "expr": "prusa_heap_total{printer_address=\"$ip\"} - prusa_heap_free{printer_address=\"$ip\"} ",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "legendFormat": "Used",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "expr": "prusa_heap_total{printer_address=\"$ip\"} ",
+                        "instant": false,
+                        "legendFormat": "Total",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "B"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 44,
+          "links": [],
+          "title": "Heap Usage",
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 18,
+                    "gradientMode": "hue",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineStyle": {
+                      "fill": "solid"
+                    },
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "never",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "fieldMinMax": false,
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "red",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 100
+                      }
+                    ]
+                  },
+                  "unit": "bytes"
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byFrameRefID",
+                      "options": "B"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.hideFrom",
+                        "value": {
+                          "legend": false,
+                          "tooltip": false,
+                          "viz": false
+                        }
+                      },
+                      {
+                        "id": "custom.fillBelowTo",
+                        "value": "Used"
+                      },
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "dark-red",
+                          "mode": "shades"
+                        }
+                      },
+                      {
+                        "id": "custom.drawStyle",
+                        "value": "line"
+                      },
+                      {
+                        "id": "custom.gradientMode",
+                        "value": "opacity"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "legend": {
+                  "calcs": [
+                    "max",
+                    "mean",
+                    "min"
+                  ],
+                  "displayMode": "table",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "12.2.0"
+          }
+        }
+      },
+      "panel-46": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "expr": "(avg by (fan) (prusa_fan_measured{printer_address=\"$ip\"}) and on(printer_address) (changes(prusa_fan_measured{printer_address=\"$ip\"}[30s]) > 0))\nor\n(avg by (fan) (prusa_fan_speed_rpm{printer_address=\"$ip\"}))",
+                        "legendFormat": "{{fan}}",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "expr": "avg(prusa_xbe_fan_rpm{printer_address=\"$ip\"} > 0) # only for core one",
+                        "legendFormat": "enclosure",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "B"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 46,
+          "links": [],
+          "title": "Fan speeds",
+          "vizConfig": {
+            "group": "bargauge",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "fieldMinMax": false,
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "rotrpm"
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "heatbreak"
+                    },
+                    "properties": [
+                      {
+                        "id": "thresholds",
+                        "value": {
+                          "mode": "absolute",
+                          "steps": [
+                            {
+                              "color": "green",
+                              "value": 0
+                            },
+                            {
+                              "color": "yellow",
+                              "value": 10000
+                            },
+                            {
+                              "color": "red",
+                              "value": 11000
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "id": "max",
+                        "value": 12000
+                      },
+                      {
+                        "id": "min",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "print"
+                    },
+                    "properties": [
+                      {
+                        "id": "thresholds",
+                        "value": {
+                          "mode": "absolute",
+                          "steps": [
+                            {
+                              "color": "green",
+                              "value": 0
+                            },
+                            {
+                              "color": "#EAB839",
+                              "value": 6000
+                            },
+                            {
+                              "color": "red",
+                              "value": 7500
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "id": "max",
+                        "value": 8000
+                      },
+                      {
+                        "id": "min",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byFrameRefID",
+                      "options": "B"
+                    },
+                    "properties": [
+                      {
+                        "id": "thresholds",
+                        "value": {
+                          "mode": "absolute",
+                          "steps": [
+                            {
+                              "color": "green",
+                              "value": 0
+                            },
+                            {
+                              "color": "#EAB839",
+                              "value": 4500
+                            },
+                            {
+                              "color": "red",
+                              "value": 5500
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "id": "max",
+                        "value": 6000
+                      },
+                      {
+                        "id": "min",
+                        "value": 0
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "hotend"
+                    },
+                    "properties": [
+                      {
+                        "id": "thresholds",
+                        "value": {
+                          "mode": "absolute",
+                          "steps": [
+                            {
+                              "color": "green",
+                              "value": 0
+                            },
+                            {
+                              "color": "#EAB839",
+                              "value": 9000
+                            },
+                            {
+                              "color": "red",
+                              "value": 10500
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "id": "fieldMinMax",
+                        "value": false
+                      },
+                      {
+                        "id": "max",
+                        "value": 11000
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "displayMode": "gradient",
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": false
+                },
+                "maxVizHeight": 300,
+                "minVizHeight": 16,
+                "minVizWidth": 8,
+                "namePlacement": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showUnfilled": true,
+                "sizing": "auto",
+                "valueMode": "color"
+              }
+            },
+            "version": "12.2.0"
+          }
+        }
+      },
+      "panel-47": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "loki",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "direction": "backward",
+                        "editorMode": "builder",
+                        "expr": "{job=\"prusa_job_image\", printer_ip=\"$ip\"}",
+                        "maxLines": 1,
+                        "queryType": "range"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "hideTimeOverride": true,
+                "timeFrom": "1m"
+              },
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 47,
+          "links": [],
+          "title": "Printed file",
+          "vizConfig": {
+            "group": "volkovlabs-image-panel",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {},
+                "overrides": []
+              },
+              "options": {
+                "autoPlay": true,
+                "autoPlayInfinity": false,
+                "buttons": [],
+                "controls": true,
+                "height": 0,
+                "heightMode": "auto",
+                "infinityPlay": false,
+                "mediaSources": [
+                  {
+                    "field": "Line",
+                    "id": "23be1839-b329-47bc-b7ac-1775ed6835e6",
+                    "refId": "A",
+                    "type": "image"
+                  }
+                ],
+                "noResultsMessage": "Printer is not printing",
+                "pdfToolbar": true,
+                "scale": "crisp-edges",
+                "toolbar": true,
+                "width": 0,
+                "widthMode": "original",
+                "zoomType": "default"
+              }
+            },
+            "version": "7.1.0"
+          }
+        }
+      },
+      "panel-48": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "code",
+                        "expr": "prusa_5VVoltage{printer_address=\"$ip\"}",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "interval": "1s",
+                        "legendFormat": "5V rail",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "code",
+                        "expr": "prusa_24VVoltage{printer_address=\"$ip\"}",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "interval": "1s",
+                        "legendFormat": "24V rail",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "C"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "prusa_volt_bed{printer_address=\"$ip\"}",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Nozzle",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "B"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "prusa_volt_nozz{printer_address=\"$ip\"}",
+                        "fullMetaSearch": false,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Bed",
+                        "range": true,
+                        "useBackend": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "D"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "interval": "1s"
+              },
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 48,
+          "links": [],
+          "title": "Voltages",
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "#fc6d09",
+                    "mode": "thresholds"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 0,
+                    "gradientMode": "hue",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "#ff6e07",
+                        "value": 0
+                      },
+                      {
+                        "color": "#EAB839",
+                        "value": 12
+                      },
+                      {
+                        "color": "green",
+                        "value": 22
+                      }
+                    ]
+                  },
+                  "unit": "volt"
+                },
+                "overrides": []
+              },
+              "options": {
+                "legend": {
+                  "calcs": [
+                    "max",
+                    "mean",
+                    "min"
+                  ],
+                  "displayMode": "table",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "12.2.0"
+          }
+        }
+      }
+    },
+    "layout": {
+      "kind": "GridLayout",
+      "spec": {
+        "items": []
+      }
+    },
+    "links": [],
+    "liveNow": true,
+    "preload": false,
+    "tags": [],
+    "timeSettings": {
+      "autoRefresh": "5s",
+      "autoRefreshIntervals": [
+        "5s"
+      ],
+      "fiscalYearStartMonth": 0,
+      "from": "now-5m",
+      "hideTimepicker": false,
+      "timezone": "browser",
+      "to": "now"
+    },
+    "title": "Prusa Metrics MK4/C1",
+    "variables": [
+      {
+        "kind": "QueryVariable",
+        "spec": {
+          "allowCustomValue": true,
+          "current": {
+            "text": "",
+            "value": ""
+          },
+          "definition": "label_values(prusa_up,printer_address)",
+          "hide": "dontHide",
+          "includeAll": false,
+          "label": "Printer",
+          "multi": false,
+          "name": "ip",
+          "options": [],
+          "query": {
+            "group": "prometheus",
+            "kind": "DataQuery",
+            "spec": {
+              "qryType": 1,
+              "query": "label_values(prusa_up,printer_address)",
+              "refId": "PrometheusVariableQueryEditor-VariableQuery"
+            },
+            "version": "v0"
+          },
+          "refresh": "onDashboardLoad",
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": "disabled"
+        }
+      },
+      {
+        "kind": "QueryVariable",
+        "spec": {
+          "allowCustomValue": true,
+          "current": {
+            "text": "",
+            "value": ""
+          },
+          "definition": "query_result(max(prusa_active_extruder{printer_address=\"$ip\"}) >= 0  < 5 or vector (0))",
+          "hide": "hideVariable",
+          "includeAll": false,
+          "multi": false,
+          "name": "active_extruder",
+          "options": [],
+          "query": {
+            "group": "prometheus",
+            "kind": "DataQuery",
+            "spec": {
+              "qryType": 3,
+              "query": "query_result(max(prusa_active_extruder{printer_address=\"$ip\"}) >= 0  < 5 or vector (0))",
+              "refId": "PrometheusVariableQueryEditor-VariableQuery"
+            },
+            "version": "v0"
+          },
+          "refresh": "onTimeRangeChanged",
+          "regex": ".*{.*} (?<value>.*) .*",
+          "skipUrlSync": false,
+          "sort": "disabled"
+        }
+      },
+      {
+        "kind": "QueryVariable",
+        "spec": {
+          "allowCustomValue": true,
+          "current": {
+            "text": "",
+            "value": ""
+          },
+          "definition": "query_result(vector($active_extruder)+1)",
+          "hide": "hideVariable",
+          "includeAll": false,
+          "multi": false,
+          "name": "adjusted_active_extruder",
+          "options": [],
+          "query": {
+            "group": "prometheus",
+            "kind": "DataQuery",
+            "spec": {
+              "qryType": 3,
+              "query": "query_result(vector($active_extruder)+1)",
+              "refId": "PrometheusVariableQueryEditor-VariableQuery"
+            },
+            "version": "v0"
+          },
+          "refresh": "onTimeRangeChanged",
+          "regex": ".*{.*} (?<value>.*) .*",
+          "skipUrlSync": false,
+          "sort": "disabled"
+        }
       }
     ]
   },
-  "editable": true,
-  "fiscalYearStartMonth": 0,
-  "graphTooltip": 1,
-  "id": null,
-  "links": [],
-  "liveNow": true,
-  "panels": [
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "id": 31,
-      "panels": [],
-      "title": "Overview",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "datasource",
-        "uid": "-- Mixed --"
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 0,
-        "y": 1
-      },
-      "hideTimeOverride": true,
-      "id": 27,
-      "interval": "10s",
-      "options": {
-        "autoPlay": true,
-        "autoPlayInfinity": false,
-        "buttons": [],
-        "controls": true,
-        "height": 0,
-        "heightMode": "auto",
-        "infinityPlay": false,
-        "mediaSources": [
-          {
-            "field": "printer_job_image",
-            "id": "fa8a4cc2-e3cf-46e5-96b6-67114b2e07ab",
-            "refId": "path",
-            "type": "image"
-          }
-        ],
-        "noResultsMessage": "None",
-        "pdfToolbar": true,
-        "scale": "auto",
-        "toolbar": true,
-        "width": 0,
-        "widthMode": "auto",
-        "zoomType": "default"
-      },
-      "pluginVersion": "6.3.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "exemplar": false,
-          "expr": "prusa_job_image{printer_address=\"$ip\"}",
-          "format": "table",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "instant": true,
-          "legendFormat": "{{printer_job_path}}",
-          "range": false,
-          "refId": "path",
-          "useBackend": false
-        }
-      ],
-      "timeFrom": "10s",
-      "title": "Printed File",
-      "transformations": [
-        {
-          "id": "renameByRegex",
-          "options": {
-            "regex": "Value",
-            "renamePattern": "None"
-          }
-        }
-      ],
-      "type": "volkovlabs-image-panel"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_MIMIR}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "orange",
-            "mode": "fixed"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 5,
-        "y": 1
-      },
-      "hideTimeOverride": true,
-      "id": 12,
-      "interval": "10s",
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "name",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "avg by(printer_name) (prusa_info{printer_address=\"$ip\"})",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "legendFormat": "{{printer_job_name}}",
-          "range": true,
-          "refId": "A",
-          "useBackend": false
-        }
-      ],
-      "timeFrom": "10s",
-      "title": "Printer Name",
-      "transformations": [
-        {
-          "id": "renameByRegex",
-          "options": {
-            "regex": "Value",
-            "renamePattern": "None"
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_MIMIR}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 9,
-        "y": 1
-      },
-      "hideTimeOverride": true,
-      "id": 16,
-      "interval": "15s",
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "name",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "exemplar": false,
-          "expr": "avg by(printer_model) (prusa_info{printer_address=\"$ip\"})",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "instant": false,
-          "interval": "1s",
-          "legendFormat": "{{serial_number}}",
-          "range": true,
-          "refId": "A",
-          "useBackend": false
-        }
-      ],
-      "timeFrom": "1s",
-      "title": "Printer Model",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_MIMIR}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "green",
-            "mode": "fixed"
-          },
-          "mappings": [
-            {
-              "options": {
-                "PC": {
-                  "color": "dark-green",
-                  "index": 1
-                },
-                "PETG": {
-                  "color": "#fc6d09",
-                  "index": 2
-                },
-                "PLA": {
-                  "color": "dark-blue",
-                  "index": 0
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "noValue": "PLA",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 11,
-        "y": 1
-      },
-      "hideTimeOverride": true,
-      "id": 19,
-      "interval": "10s",
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "name",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "exemplar": false,
-          "expr": "max by(printer_filament) (prusa_material_info{printer_address=\"$ip\"})",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "instant": true,
-          "legendFormat": "{{printer_filament}}",
-          "range": false,
-          "refId": "A",
-          "useBackend": false
-        }
-      ],
-      "timeFrom": "10s",
-      "title": "Filament",
-      "transformations": [
-        {
-          "id": "renameByRegex",
-          "options": {
-            "regex": "Value",
-            "renamePattern": "None"
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_MIMIR}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "orange",
-            "mode": "palette-classic"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 13,
-        "y": 1
-      },
-      "hideTimeOverride": true,
-      "id": 21,
-      "interval": "10s",
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "name",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "avg by(printer_state) (prusa_status_info{printer_address=\"$ip\"})",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A",
-          "useBackend": false
-        }
-      ],
-      "timeFrom": "10s",
-      "title": "Status",
-      "transformations": [
-        {
-          "id": "renameByRegex",
-          "options": {
-            "regex": "Value",
-            "renamePattern": "None"
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_MIMIR}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "green",
-            "mode": "fixed"
-          },
-          "fieldMinMax": true,
-          "mappings": [],
-          "noValue": "Not printing",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              }
-            ]
-          },
-          "unit": "percentunit"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 15,
-        "y": 1
-      },
-      "id": 37,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "prusa_printing_progress_ratio",
-          "format": "table",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "instant": true,
-          "interval": "1s",
-          "legendFormat": "__auto",
-          "range": false,
-          "refId": "e",
-          "useBackend": false
-        }
-      ],
-      "title": "Progress",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_MIMIR}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "green",
-            "mode": "fixed"
-          },
-          "fieldMinMax": true,
-          "mappings": [],
-          "noValue": "Not printing",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 17,
-        "y": 1
-      },
-      "id": 22,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "prusa_printing_time_remaining_seconds{printer_address=\"$ip\", printer_job_name!=\"\"}",
-          "format": "table",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "instant": true,
-          "interval": "1s",
-          "legendFormat": "__auto",
-          "range": false,
-          "refId": "e",
-          "useBackend": false
-        }
-      ],
-      "title": "Remaining time",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "color": "green",
-                  "index": 0,
-                  "text": "No"
-                },
-                "1": {
-                  "color": "red",
-                  "index": 1,
-                  "text": "Yes"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 20,
-        "y": 1
-      },
-      "id": 45,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "prusa_oc_inp{ip=\"$ip\"}",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "legendFormat": "Input rail",
-          "range": true,
-          "refId": "A",
-          "useBackend": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "prusa_oc_nozz{ip=\"$ip\"}",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "instant": false,
-          "legendFormat": "Nozzle rail",
-          "range": true,
-          "refId": "B",
-          "useBackend": false
-        }
-      ],
-      "title": "Overcurrent detected",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_MIMIR}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds",
-            "seriesBy": "last"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "scheme",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineStyle": {
-              "fill": "solid"
-            },
-            "lineWidth": 1,
-            "pointSize": 3,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "decimals": 2,
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              }
-            ]
-          },
-          "unit": "celsius"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Target"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "red",
-                  "mode": "fixed"
-                }
-              },
-              {
-                "id": "custom.lineWidth",
-                "value": 1
-              },
-              {
-                "id": "custom.lineStyle",
-                "value": {
-                  "dash": [
-                    10,
-                    10
-                  ],
-                  "fill": "dash"
-                }
-              },
-              {
-                "id": "custom.gradientMode",
-                "value": "none"
-              },
-              {
-                "id": "custom.fillOpacity",
-                "value": 5
-              },
-              {
-                "id": "custom.fillBelowTo",
-                "value": "Value"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Actual"
-            },
-            "properties": [
-              {
-                "id": "custom.fillBelowTo",
-                "value": "Target"
-              },
-              {
-                "id": "custom.fillOpacity",
-                "value": 5
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 5,
-        "x": 5,
-        "y": 4
-      },
-      "id": 39,
-      "interval": "15s",
-      "options": {
-        "legend": {
-          "calcs": [
-            "max",
-            "mean",
-            "min",
-            "lastNotNull"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true,
-          "sortBy": "Name",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "avg by(n) (prusa_temp_noz{ip=\"$ip\", n=\"$active_extruder\"})",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "interval": "1s",
-          "legendFormat": "Actual",
-          "range": true,
-          "refId": "B",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "max by(n) (prusa_ttemp_noz{ip=\"$ip\", n=\"$active_extruder\"})",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "interval": "1s",
-          "legendFormat": "Target",
-          "range": true,
-          "refId": "C",
-          "useBackend": false
-        }
-      ],
-      "title": "Temperature - Nozzle $adjusted_active_extruder",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_MIMIR}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds",
-            "seriesBy": "last"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "scheme",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineStyle": {
-              "fill": "solid"
-            },
-            "lineWidth": 1,
-            "pointSize": 3,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "decimals": 2,
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              }
-            ]
-          },
-          "unit": "celsius"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "prusa_ttemp_bed"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "red",
-                  "mode": "fixed"
-                }
-              },
-              {
-                "id": "custom.lineWidth",
-                "value": 1
-              },
-              {
-                "id": "custom.lineStyle",
-                "value": {
-                  "dash": [
-                    10,
-                    10
-                  ],
-                  "fill": "dash"
-                }
-              },
-              {
-                "id": "custom.gradientMode",
-                "value": "none"
-              },
-              {
-                "id": "custom.fillOpacity",
-                "value": 5
-              },
-              {
-                "id": "custom.fillBelowTo",
-                "value": "prusa_temp_bed"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "prusa_temp_bed"
-            },
-            "properties": [
-              {
-                "id": "custom.fillBelowTo",
-                "value": "prusa_ttemp_bed"
-              },
-              {
-                "id": "custom.fillOpacity",
-                "value": 5
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 5,
-        "x": 10,
-        "y": 4
-      },
-      "id": 14,
-      "interval": "15s",
-      "options": {
-        "legend": {
-          "calcs": [
-            "max",
-            "mean",
-            "min",
-            "lastNotNull"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true,
-          "sortBy": "Name",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "prusa_temp_bed{ip=\"$ip\"}",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "interval": "1s",
-          "legendFormat": "Actual",
-          "range": true,
-          "refId": "B",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "prusa_ttemp_bed{ip=\"$ip\"}",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "interval": "1s",
-          "legendFormat": "Target",
-          "range": true,
-          "refId": "C",
-          "useBackend": false
-        }
-      ],
-      "title": "Temperature - Heatbed",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_MIMIR}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "#fc6d09",
-            "mode": "continuous-YlBl"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "hue",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#ff6e07"
-              }
-            ]
-          },
-          "unit": "massmg"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 4,
-        "x": 15,
-        "y": 4
-      },
-      "id": 1,
-      "options": {
-        "legend": {
-          "calcs": [
-            "max",
-            "mean",
-            "min"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "prusa_loadcell_value{ip=\"$ip\"}",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "interval": "1s",
-          "legendFormat": "Pressure",
-          "range": true,
-          "refId": "A",
-          "useBackend": false
-        }
-      ],
-      "title": "Loadcell",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "rotrpm"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "heatbreak"
-            },
-            "properties": [
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green"
-                    },
-                    {
-                      "color": "yellow",
-                      "value": 10000
-                    },
-                    {
-                      "color": "red",
-                      "value": 11000
-                    }
-                  ]
-                }
-              },
-              {
-                "id": "max",
-                "value": 12000
-              },
-              {
-                "id": "min",
-                "value": 0
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "print"
-            },
-            "properties": [
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green"
-                    },
-                    {
-                      "color": "#EAB839",
-                      "value": 6000
-                    },
-                    {
-                      "color": "red",
-                      "value": 7500
-                    }
-                  ]
-                }
-              },
-              {
-                "id": "max",
-                "value": 8000
-              },
-              {
-                "id": "min",
-                "value": 0
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byFrameRefID",
-              "options": "B"
-            },
-            "properties": [
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green"
-                    },
-                    {
-                      "color": "#EAB839",
-                      "value": 4500
-                    },
-                    {
-                      "color": "red",
-                      "value": 5500
-                    }
-                  ]
-                }
-              },
-              {
-                "id": "max",
-                "value": 6000
-              },
-              {
-                "id": "min",
-                "value": 0
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 4,
-        "x": 20,
-        "y": 4
-      },
-      "id": 46,
-      "options": {
-        "displayMode": "gradient",
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "maxVizHeight": 300,
-        "minVizHeight": 16,
-        "minVizWidth": 8,
-        "namePlacement": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true,
-        "sizing": "auto",
-        "valueMode": "color"
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "editorMode": "code",
-          "expr": "prusa_fan_measured{ip=\"$ip\"}",
-          "legendFormat": "{{fan}}",
-          "range": true,
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "code",
-          "expr": "avg(prusa_xbe_fan_rpm{ip=\"$ip\"} > 0)",
-          "hide": false,
-          "legendFormat": "enclosure",
-          "range": true,
-          "refId": "B"
-        }
-      ],
-      "title": "Fan speeds",
-      "type": "bargauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_MIMIR}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "orange",
-            "mode": "fixed"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 4,
-        "x": 0,
-        "y": 8
-      },
-      "hideTimeOverride": true,
-      "id": 33,
-      "interval": "10s",
-      "options": {
-        "colorMode": "none",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "text": {},
-        "textMode": "name",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "exemplar": false,
-          "expr": "prusa_status_info{printer_address=\"$ip\"} == 4",
-          "format": "time_series",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "instant": true,
-          "legendFormat": "{{printer_job_name}}",
-          "range": false,
-          "refId": "A",
-          "useBackend": false
-        }
-      ],
-      "timeFrom": "10s",
-      "transformations": [
-        {
-          "id": "renameByRegex",
-          "options": {
-            "regex": "Value",
-            "renamePattern": "None"
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_MIMIR}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "options": {
-                "6": {
-                  "color": "#F2495C",
-                  "index": 0,
-                  "text": "None"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 0,
-        "y": 10
-      },
-      "id": 38,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "editorMode": "code",
-          "expr": "prusa_active_extruder{ip=\"$ip\"} + 1 or vector(0)",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Active Extruder",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_MIMIR}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "percentunit"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 2,
-        "y": 10
-      },
-      "hideTimeOverride": true,
-      "id": 34,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "value",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "prusa_print_speed_ratio{printer_address=\"$ip\"}",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A",
-          "useBackend": false
-        }
-      ],
-      "timeFrom": "10s",
-      "title": "Print Speed",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 18,
-            "gradientMode": "hue",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineStyle": {
-              "fill": "solid"
-            },
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "max": 100,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red"
-              },
-              {
-                "color": "red",
-                "value": 100
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byFrameRefID",
-              "options": "B"
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": true,
-                  "tooltip": true,
-                  "viz": false
-                }
-              },
-              {
-                "id": "custom.fillBelowTo",
-                "value": "%"
-              },
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-red",
-                  "mode": "shades"
-                }
-              },
-              {
-                "id": "custom.drawStyle",
-                "value": "line"
-              },
-              {
-                "id": "custom.gradientMode",
-                "value": "opacity"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 4,
-        "x": 20,
-        "y": 10
-      },
-      "id": 43,
-      "options": {
-        "legend": {
-          "calcs": [
-            "max",
-            "mean",
-            "min"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "prusa_cpu_usage{ip=\"$ip\"}",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "legendFormat": "%",
-          "range": true,
-          "refId": "A",
-          "useBackend": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "code",
-          "expr": "vector(100)",
-          "hide": false,
-          "instant": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "B"
-        }
-      ],
-      "title": "CPU Usage",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "color": "red",
-                  "index": 0,
-                  "text": "Disabled"
-                },
-                "1": {
-                  "color": "green",
-                  "index": 1,
-                  "text": "Enabled"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 0,
-        "y": 13
-      },
-      "id": 42,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "max by(printer_name) (prusa_mmu{printer_address=\"$ip\"})",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A",
-          "useBackend": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
-        }
-      ],
-      "title": "MMU status",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_MIMIR}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 2,
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "color": "yellow",
-                  "index": 0,
-                  "text": "Deactivated"
-                },
-                "1": {
-                  "index": 1,
-                  "text": "Active"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              }
-            ]
-          },
-          "unit": "mm"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 2,
-        "y": 13
-      },
-      "hideTimeOverride": true,
-      "id": 24,
-      "interval": "15s",
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "value",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "prusa_nozzle_size_meters{printer_address=\"$ip\"}",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "instant": false,
-          "interval": "1s",
-          "legendFormat": "{{serial_number}}",
-          "range": true,
-          "refId": "A",
-          "useBackend": false
-        }
-      ],
-      "timeFrom": "1s",
-      "title": "Nozzle Size",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_MIMIR}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "#fc6d09",
-            "mode": "continuous-YlBl"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "hue",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#ff6e07"
-              }
-            ]
-          },
-          "unit": "volt"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byFrameRefID",
-              "options": "C"
-            },
-            "properties": [
-              {
-                "id": "custom.axisPlacement",
-                "value": "right"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byFrameRefID",
-              "options": "D"
-            },
-            "properties": [
-              {
-                "id": "custom.axisColorMode",
-                "value": "text"
-              },
-              {
-                "id": "color",
-                "value": {
-                  "mode": "palette-classic"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 7,
-        "x": 5,
-        "y": 15
-      },
-      "id": 40,
-      "interval": "1s",
-      "options": {
-        "legend": {
-          "calcs": [
-            "max",
-            "mean",
-            "min"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "code",
-          "expr": "prusa_5VVoltage{ip=\"$ip\"}",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "interval": "1s",
-          "legendFormat": "5V rail",
-          "range": true,
-          "refId": "A",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "code",
-          "expr": "prusa_24VVoltage{ip=\"$ip\"}",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "interval": "1s",
-          "legendFormat": "24V rail",
-          "range": true,
-          "refId": "C",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "prusa_volt_bed{ip=\"$ip\"}",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "instant": false,
-          "legendFormat": "Nozzle",
-          "range": true,
-          "refId": "B",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "prusa_volt_nozz{ip=\"$ip\"}",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "instant": false,
-          "legendFormat": "Bed",
-          "range": true,
-          "refId": "D",
-          "useBackend": false
-        }
-      ],
-      "title": "Voltages",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_MIMIR}"
-      },
-      "description": "It is not known if data are correct at this moment",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "#fc6d09",
-            "mode": "continuous-GrYlRd",
-            "seriesBy": "last"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 5,
-            "gradientMode": "scheme",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineStyle": {
-              "fill": "solid"
-            },
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "max": 300,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#ff6e07"
-              }
-            ]
-          },
-          "unit": "watt"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Bed"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "yellow",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "5V Rail"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "orange",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 7,
-        "x": 12,
-        "y": 15
-      },
-      "id": 30,
-      "options": {
-        "legend": {
-          "calcs": [
-            "max",
-            "mean",
-            "min"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "code",
-          "expr": "abs((prusa_curr_inp{ip=\"$ip\"}* 24)) ",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "interval": "1s",
-          "legendFormat": "Watts",
-          "range": true,
-          "refId": "A",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "code",
-          "expr": "sum(prusa_bed_curr{ip=\"$ip\"})* sum(prusa_24VVoltage{ip=\"$ip\"})",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "interval": "1s",
-          "legendFormat": "Bed",
-          "range": true,
-          "refId": "B",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "code",
-          "expr": "prusa_splitter_5V_current{ip=\"$ip\"}*prusa_5VVoltage{ip=\"$ip\"}",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "interval": "1s",
-          "legendFormat": "5V Rail",
-          "range": true,
-          "refId": "C",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "code",
-          "expr": "sum(prusa_dwarf_heat_curr{ip=\"$ip\"} < 50 or vector(0))  * sum(prusa_24VVoltage{ip=\"$ip\"})",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "interval": "1s",
-          "legendFormat": "Dwarfs",
-          "range": true,
-          "refId": "D",
-          "useBackend": false
-        }
-      ],
-      "title": "Power consumption (experimental)",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_MIMIR}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "max": 300,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "#EAB839",
-                "value": 280
-              },
-              {
-                "color": "red",
-                "value": 290
-              }
-            ]
-          },
-          "unit": "celsius"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byFrameRefID",
-              "options": "B"
-            },
-            "properties": [
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green"
-                    },
-                    {
-                      "color": "yellow",
-                      "value": 60
-                    },
-                    {
-                      "color": "red",
-                      "value": 80
-                    }
-                  ]
-                }
-              },
-              {
-                "id": "max",
-                "value": 100
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byFrameRefID",
-              "options": "C"
-            },
-            "properties": [
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green"
-                    },
-                    {
-                      "color": "#EAB839",
-                      "value": 100
-                    },
-                    {
-                      "color": "red",
-                      "value": 110
-                    }
-                  ]
-                }
-              },
-              {
-                "id": "max",
-                "value": 120
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "prusa_chamber_temp"
-            },
-            "properties": [
-              {
-                "id": "min",
-                "value": 0
-              },
-              {
-                "id": "max",
-                "value": 100
-              },
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green"
-                    },
-                    {
-                      "color": "#EAB839",
-                      "value": 60
-                    },
-                    {
-                      "color": "red",
-                      "value": 80
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "prusa_temp_mcu"
-            },
-            "properties": [
-              {
-                "id": "min",
-                "value": 0
-              },
-              {
-                "id": "max",
-                "value": 105
-              },
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green"
-                    },
-                    {
-                      "color": "#EAB839",
-                      "value": 70
-                    },
-                    {
-                      "color": "red",
-                      "value": 90
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 4,
-        "x": 0,
-        "y": 16
-      },
-      "id": 10,
-      "interval": "15s",
-      "options": {
-        "displayMode": "lcd",
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "maxVizHeight": 300,
-        "minVizHeight": 41,
-        "minVizWidth": 8,
-        "namePlacement": "top",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true,
-        "sizing": "auto",
-        "valueMode": "color"
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "prusa_temp_noz{ip=\"$ip\"}",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "interval": "1s",
-          "legendFormat": "Nozzle - extruder {{n}}",
-          "range": true,
-          "refId": "A",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "prusa_temp_hbr{ip=\"$ip\", a=\"0\"}",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "interval": "1s",
-          "legendFormat": "Heatbreak - extruder {{n}}",
-          "range": true,
-          "refId": "B",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "prusa_temp_bed{ip=\"$ip\"}",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "interval": "1s",
-          "legendFormat": "Heatbed",
-          "range": true,
-          "refId": "C",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "prusa_temp_mcu{ip=\"$ip\"}",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "interval": "1s",
-          "legendFormat": "MCU",
-          "range": true,
-          "refId": "E",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "prusa_chamber_temp{ip=\"$ip\"}",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "interval": "1s",
-          "legendFormat": "Chamber",
-          "range": true,
-          "refId": "D",
-          "useBackend": false
-        }
-      ],
-      "title": "Temperatures",
-      "type": "bargauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 18,
-            "gradientMode": "hue",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineStyle": {
-              "fill": "solid"
-            },
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red"
-              },
-              {
-                "color": "red",
-                "value": 100
-              }
-            ]
-          },
-          "unit": "bytes"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byFrameRefID",
-              "options": "B"
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                }
-              },
-              {
-                "id": "custom.fillBelowTo",
-                "value": "Used"
-              },
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-red",
-                  "mode": "shades"
-                }
-              },
-              {
-                "id": "custom.drawStyle",
-                "value": "line"
-              },
-              {
-                "id": "custom.gradientMode",
-                "value": "opacity"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 4,
-        "x": 20,
-        "y": 18
-      },
-      "id": 44,
-      "options": {
-        "legend": {
-          "calcs": [
-            "max",
-            "mean",
-            "min"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "disableTextWrap": false,
-          "editorMode": "code",
-          "expr": "prusa_heap_total{ip=\"$ip\"} - prusa_heap_free{ip=\"$ip\"} ",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "legendFormat": "Used",
-          "range": true,
-          "refId": "A",
-          "useBackend": false,
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "code",
-          "expr": "prusa_heap_total{ip=\"$ip\"} ",
-          "hide": false,
-          "instant": false,
-          "legendFormat": "Total",
-          "range": true,
-          "refId": "B"
-        }
-      ],
-      "title": "Heap Usage",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_MIMIR}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "dark-green"
-              }
-            ]
-          },
-          "unit": "binbps"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 0,
-        "y": 22
-      },
-      "id": 17,
-      "interval": "15s",
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "vertical",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "value_and_name",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.0.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "rate(prusa_eth_out_sent{ip=\"$ip\"}[$__rate_interval])",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "interval": "1s",
-          "legendFormat": "Ethernet Out",
-          "range": true,
-          "refId": "A",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "rate(prusa_eth_in_recv{ip=\"$ip\"}[$__rate_interval])",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "interval": "1s",
-          "legendFormat": "Ethernet In",
-          "range": true,
-          "refId": "B",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "editorMode": "code",
-          "expr": "rate(prusa_esp_in_recv{ip=\"$ip\"}[$__rate_interval])",
-          "hide": false,
-          "instant": false,
-          "legendFormat": "ESP In",
-          "range": true,
-          "refId": "C"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_MIMIR}"
-          },
-          "editorMode": "code",
-          "expr": "rate(prusa_esp_out_sent{ip=\"$ip\"}[$__rate_interval])",
-          "hide": false,
-          "instant": false,
-          "legendFormat": "ESP Out",
-          "range": true,
-          "refId": "D"
-        }
-      ],
-      "title": "Network activity",
-      "type": "stat"
-    }
-  ],
-  "refresh": "5s",
-  "schemaVersion": 41,
-  "tags": [],
-  "templating": {
-    "list": [
-      {
-        "current": {},
-        "definition": "label_values(prusa_fan_speed,ip)",
-        "label": "Printer",
-        "name": "ip",
-        "options": [],
-        "query": {
-          "qryType": 1,
-          "query": "label_values(prusa_fan_speed,ip)",
-          "refId": "PrometheusVariableQueryEditor-VariableQuery"
-        },
-        "refresh": 1,
-        "regex": "",
-        "type": "query"
-      },
-      {
-        "current": {},
-        "definition": "query_result(max(prusa_active_extruder{ip=\"$ip\"}) >= 0  < 5 or vector (0))",
-        "hide": 2,
-        "name": "active_extruder",
-        "options": [],
-        "query": {
-          "qryType": 3,
-          "query": "query_result(max(prusa_active_extruder{ip=\"$ip\"}) >= 0  < 5 or vector (0))",
-          "refId": "PrometheusVariableQueryEditor-VariableQuery"
-        },
-        "refresh": 2,
-        "regex": ".*{.*} (?<value>.*) .*",
-        "type": "query"
-      },
-      {
-        "current": {},
-        "definition": "query_result(vector($active_extruder)+1)",
-        "hide": 2,
-        "name": "adjusted_active_extruder",
-        "options": [],
-        "query": {
-          "qryType": 3,
-          "query": "query_result(vector($active_extruder)+1)",
-          "refId": "PrometheusVariableQueryEditor-VariableQuery"
-        },
-        "refresh": 2,
-        "regex": ".*{.*} (?<value>.*) .*",
-        "type": "query"
-      }
-    ]
-  },
-  "time": {
-    "from": "now-1m",
-    "to": "now"
-  },
-  "timepicker": {
-    "refresh_intervals": [
-      "5s"
-    ]
-  },
-  "timezone": "browser",
-  "title": "Prusa Metrics MK4/C1",
-  "uid": "48b0d43b-c201-4bc2-8f85-1b707838e1b0",
-  "version": 19,
-  "weekStart": ""
+  "status": {}
 }

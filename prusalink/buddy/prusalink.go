@@ -297,14 +297,16 @@ func GetPrinterProfiles(printer config.Printers) (PrinterProfiles, error) {
 func GetJobImage(printer config.Printers, imagePath string) (string, error) { // returns base64 encoded image
 	//http://192.168.20.50/thumb/l/usb/PYTHON~1.BGC
 	response, err := accessPrinterEndpoint("/thumb/l"+imagePath, printer)
-
-	image, err := compressPNG(response, png.BestCompression)
-
 	if err != nil {
 		return "", err
 	}
 
-	return base64.StdEncoding.EncodeToString(image), err
+	image, err := compressPNG(response, png.BestCompression)
+	if err != nil {
+		return "", err
+	}
+
+	return base64.StdEncoding.EncodeToString(image), nil
 }
 
 func compressPNG(input []byte, compressionLevel png.CompressionLevel) ([]byte, error) {

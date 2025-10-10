@@ -13,7 +13,7 @@ var (
 			Name: "prusa_last_push_timestamp",
 			Help: "Last time the printer pushed metrics to the exporter.",
 		},
-		[]string{"mac", "ip"},
+		[]string{"printer_mac", "printer_address"},
 	)
 	udpRegistry *prometheus.Registry
 
