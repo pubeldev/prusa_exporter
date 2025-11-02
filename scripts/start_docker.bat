@@ -45,4 +45,4 @@ echo Using host IP: %HOST_IP%
 REM Set the HOST_IP environment variable for docker-compose
 set HOST_IP=%HOST_IP%
 
-docker compose up
+docker compose -f ../docker-compose.yml up

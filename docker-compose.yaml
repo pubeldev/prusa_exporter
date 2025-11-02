@@ -11,8 +11,6 @@ services:
     image: grafana/grafana:12.2
     container_name: grafana
     restart: unless-stopped
-    environment:
-      - GF_INSTALL_PLUGINS=dalvany-image-panel, grafana-xyzchart-panel, grafana-polystat-panel, yesoreyeram-infinity-datasource, volkovlabs-image-panel, betatech-qrcode-panel
     depends_on:
       - prometheus
     ports:
@@ -21,6 +19,7 @@ services:
       - pubel
     volumes:
       - ./docs/config/grafana/provisioning:/etc/grafana/provisioning
+      - .docs/config/grafana/plugins:/var/lib/grafana/plugins
       - grafana_data:/var/lib/grafana
       - ./docs/config/grafana/dashboards:/var/lib/grafana/dashboards
 
