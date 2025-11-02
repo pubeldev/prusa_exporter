@@ -19,9 +19,9 @@ services:
       - pubel
     volumes:
       - ./docs/config/grafana/provisioning:/etc/grafana/provisioning
-      - .docs/config/grafana/plugins:/var/lib/grafana/plugins
       - grafana_data:/var/lib/grafana
       - ./docs/config/grafana/dashboards:/var/lib/grafana/dashboards
+      - ./docs/config/grafana/plugins:/var/lib/grafana/plugins
 
   exporter:
     image: pubeldev/prusa_exporter:2.0.0-alpha3
@@ -34,7 +34,7 @@ services:
     ports:
       - "10009:10009"
       - 8514:8514/udp
-    command: 
+    command:
       - "--config.file=/app/prusa.yml"
       - "--log.level=info"
       - "--prusalink.scrape-timeout=5"
