@@ -1,11 +1,12 @@
 #!/bin/bash
 
+set -eou pipefail
+
 if [[ "$(uname)" == "Darwin" ]]; then
     INTERFACES=$(ifconfig)
     export HOST_IP=$(echo "$INTERFACES" | grep 'inet ' | grep -v '127.0.0.1' | grep -v 'docker' | grep -v 'veth' | awk '$2 !~ /^172\./ {print $2}')
 else
-    INTERFACES=$(ip a)
-    export HOST_IP=$(echo "$INTERFACES" | grep 'inet ' | grep -v '127.0.0.1' | grep -v 'docker' | grep -v 'veth' | grep -v 'br-' | awk '{print $2}' | cut -d'/' -f1)
+    export HOST_IP=$(ip -o -4 addr show | grep -Ev '127.0.0.1|docker' | awk -F'[ /]+' '{print $4}')
 fi
 
 if [ -z "$HOST_IP" ]; then
@@ -15,4 +16,5 @@ fi
 
 echo "Using host IP: $HOST_IP"
 
-docker compose up
+cd "$(dirname "$0")"
+docker compose -f ../docker-compose.yaml up -d

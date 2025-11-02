@@ -11,8 +11,6 @@ services:
     image: grafana/grafana:12.2
     container_name: grafana
     restart: unless-stopped
-    environment:
-      - GF_INSTALL_PLUGINS=dalvany-image-panel, grafana-xyzchart-panel, grafana-polystat-panel, yesoreyeram-infinity-datasource, volkovlabs-image-panel, betatech-qrcode-panel
     depends_on:
       - prometheus
     ports:
@@ -20,9 +18,10 @@ services:
     networks:
       - pubel
     volumes:
-      - ./docs/config/grafana/provisioning:/etc/grafana/provisioning
       - grafana_data:/var/lib/grafana
-      - ./docs/config/grafana/dashboards:/var/lib/grafana/dashboards
+      - ./docs/config/grafana/provisioning/dashboards:/var/lib/grafana/dashboards
+      - ./docs/config/grafana/plugins:/var/lib/grafana/plugins
+      - ./docs/config/grafana/provisioning:/etc/grafana/provisioning
 
   exporter:
     image: pubeldev/prusa_exporter:2.0.0-alpha3
@@ -35,7 +34,7 @@ services:
     ports:
       - "10009:10009"
       - 8514:8514/udp
-    command: 
+    command:
       - "--config.file=/app/prusa.yml"
       - "--log.level=info"
       - "--prusalink.scrape-timeout=5"

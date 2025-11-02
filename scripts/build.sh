@@ -1,8 +1,11 @@
 #!/bin/bash
 
+set -eou pipefail
+
 platforms=("linux/amd64" "linux/arm" "linux/riscv64" "linux/arm64" "windows/amd64" "darwin/amd64" "windows/arm64" "darwin/arm64")
 
-output_dir="bin"
+cd $(dirname $0)
+output_dir="../bin"
 
 mkdir -p $output_dir
 
@@ -17,7 +20,7 @@ do
     fi
 
     echo "Building $output_name ..."    
-    env GOOS=$GOOS GOARCH=$GOARCH go build -o $output_name
+    env GOOS=$GOOS GOARCH=$GOARCH go build -o $output_name ../.
 done
 
 echo "Build completed."

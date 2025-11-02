@@ -13,7 +13,7 @@ COPY *.go ./
 
 RUN go build -v -o /prusa_exporter
 
-FROM alpine:latest
+FROM alpine:3.22.2
 
 COPY --from=builder /prusa_exporter .
 
