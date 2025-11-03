@@ -40,7 +40,7 @@ services:
       - "--log.level=info"
       - "--prusalink.scrape-timeout=5"
       - "--udp.ip-override=${HOST_IP}"
-      - "--no-udp.gcode-enabled"
+      - "--udp.gcode-enabled"
       - "--loki.push-url=http://loki:3100/loki/api/v1/push"
     depends_on:
       - prometheus

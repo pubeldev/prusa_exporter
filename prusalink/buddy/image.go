@@ -16,7 +16,7 @@ func PushImageToLoki(lokiURL, printerAddress, printerModel, printerName, printer
 			{
 				"stream": map[string]string{
 					"job":              "prusa_job_image",
-					"printer_ip":       printerAddress,
+					"printer_address":  printerAddress,
 					"printer_model":    printerModel,
 					"printer_name":     printerName,
 					"printer_job_name": printerJobName,
