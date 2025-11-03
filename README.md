@@ -98,11 +98,11 @@ alpha3
 - [x] check PrusaLink metrics - done by ([imax9000](https://github.com/imax9000)) 
 
 alpha4
-- [ ] further optimization
-- [x] ~~PoC controlling printer via Grafana~~ - PoC work but it's flawed - scrapping - [prusa_proxy](https://github.com/pubeldev/prusa_proxy)
+- [x] further optimization
+- [x] ~~PoC controlling printer via Grafana~~ - PoC work but it's flawed - scrapping - [prusa_proxy](https://github.com/pubeldev/prusa_proxy) - I've used skeleton in sending metrics gcode
 - [x] Mini dashboard
-- [ ] MKx dashboard
-- [ ] Core One dashboard
+- [x] MKx dashboard
+- [x] Core One dashboard
 - [ ] XL dashboard
 
 beta1
