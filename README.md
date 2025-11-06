@@ -127,6 +127,7 @@ beta2
 
 rc1
 - [x] create overview dashboard for all printers in system
+- [ ] Grafana provisioning
 - [ ] further testing
 
 final
