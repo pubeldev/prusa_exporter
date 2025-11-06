@@ -16,6 +16,7 @@ import (
 
 var (
 	listOfMetrics = []string{ // default metrics to enable - contains all metrics for Mini / MK4 / Core One and XL
+		"active_extruder",
 		"bedlet_target",
 		"dwarfs_mcu_temp",
 		"dwarfs_board_temp",
@@ -177,7 +178,7 @@ func gcodeInit() (init string, err error) {
 	}
 
 	// Write the initial lines
-	builder.WriteString(fmt.Sprintf("M330 SYSLOG\nM334 %s 8514", ip))
+	builder.WriteString(fmt.Sprintf("M330 SYSLOG\nM334 %s 8514\nM340 %s 13514", ip, ip))
 
 	if configuration.Exporter.AllMetricsUDP {
 		for _, metric := range allMetricsList {
