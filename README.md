@@ -4,6 +4,34 @@
 ![tag](https://img.shields.io/github/v/tag/pstrobl96/prusa_exporter) 
 ![license](https://img.shields.io/github/license/pstrobl96/prusa_exporter)
 
+- [prusa\_exporter](#prusa_exporter)
+    - [Running](#running)
+      - [Docker](#docker)
+      - [Standalone](#standalone)
+      - [Flags](#flags)
+    - [Dashboards](#dashboards)
+      - [Prusa MKx (MK3.5(S) / MK3.9(S) / MK4(S))](#prusa-mkx-mk35s--mk39s--mk4s)
+      - [Prusa Core One](#prusa-core-one)
+      - [Prusa XL](#prusa-xl)
+      - [Prusa XL - fancy version for 5 Tools (BETA and WIP)](#prusa-xl---fancy-version-for-5-tools-beta-and-wip)
+      - [Prusa Mini](#prusa-mini)
+      - [General Overview](#general-overview)
+- [Roadmap](#roadmap)
+- [FAQ](#faq)
+    - [My printer is correctly connected via Prusa Link API but I got no UDP metrics](#my-printer-is-correctly-connected-via-prusa-link-api-but-i-got-no-udp-metrics)
+    - [After expoterer started my printers returned Warning - The G-code isn't fully compatible](#after-expoterer-started-my-printers-returned-warning---the-g-code-isnt-fully-compatible)
+    - [My printer has UDP metrics host set as 172.x.x.x](#my-printer-has-udp-metrics-host-set-as-172xxx)
+    - [Can I enable all UDP metrics?](#can-i-enable-all-udp-metrics)
+    - [Can I get also logs from the printer?](#can-i-get-also-logs-from-the-printer)
+    - [Why is there Loki in docker compose? Isn't this exporter of metrics?](#why-is-there-loki-in-docker-compose-isnt-this-exporter-of-metrics)
+    - [I don't have Prusa Link metrics. Why?](#i-dont-have-prusa-link-metrics-why)
+    - [Why do I have to fill printer model in configuration file?](#why-do-i-have-to-fill-printer-model-in-configuration-file)
+    - [Is the docker compose production ready?](#is-the-docker-compose-production-ready)
+    - [What metrics are better? UDP or Prusa Link](#what-metrics-are-better-udp-or-prusa-link)
+    - [Can I run the exporter on Raspberry Pi?](#can-i-run-the-exporter-on-raspberry-pi)
+    - [What UDP metrics are enabled by default?](#what-udp-metrics-are-enabled-by-default)
+
+
 # prusa_exporter
 
 Prusa Exporter or more known as prusa_exporter is a tool that allows users to expose metrics from the Prusa Research FDM 3D printers. Its approach is to scrape metrics from [Prusa Link](https://help.prusa3d.com/article/prusa-connect-and-prusalink-explained_302608) REST API and also getting [UDP](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/master/doc/metrics.md) type of metrics. After gettng data it's simply exposes the metrics at `/metrics/prusalink` and `/metrics/udp` endpoints. You can also access `http://localhost:10009`.
@@ -23,7 +51,7 @@ By default at start of the exporter it will send the configuration gcode to the 
   - You can select all but it has actual impact on performance so choose wisely
 
 
-Of course you can configure metrics with gcode as well - that gcode can be found [here](docs/examples/syslog/config_full.gcode) as well
+Of course you can configure metrics with gcode as well - that gcode can be found [here](docs/examples/syslog/config_full.gcode) as well. This list is not complete because there are constant changes in [Prusa-Firmware-Buddy](github.com/prusa3d/Prusa-Firmware-Buddy/)
 
 ```
 M330 SYSLOG
@@ -51,6 +79,83 @@ M331 eth_in
   - your chosen name => just use basic name non standard - type
 - `type` - model of the printer
   - MK3.9 / MK4 / MK4S / XL / Core One ...
+
+### Running 
+
+#### Docker
+
+I've prepared docker compose that can be run with proper tools installed. Install Docker [Linux](https://docs.docker.com/engine/install/)/[macOS](https://docs.docker.com/desktop/setup/install/mac-install/). Make sure you installed also docker compose. 
+
+If you choose to sent UDP enable g-code to registered printers in (prusa.yml) - then you have to export environment variable `HOST_IP` that contains IP address of the computer where exporter is running. Code contains a function to detect host IP address but it's not possible to get it running inside of Docker.
+
+```
+export HOST_IP=192.168.20.20
+docker compose up
+```
+
+Or you can use startup script
+
+```
+./start_docker.sh
+```
+
+#### Standalone
+
+Running exporter standalone is certainly possible and you can get binaries here in Releases. It's only way how to run it on Windows without WSL for example. Just be sure that there is prusa.yml right next to the executable. 
+
+Linux
+```
+prusa_exporter-linux-amd64
+```
+
+macOS
+```
+prusa_exporter-darwin-arm64
+```
+
+Windows
+```
+prusa_exporter-windows-amd64.exe
+```
+
+#### Flags
+
+- config.file
+  - Configuration file for prusa_exporter
+  - Default: ./prusa.yml
+- exporter.metrics-path
+  - Path where to expose Prusa Link metrics
+  - Default: /metrics/prusalink
+- exporter.udp-metrics-path
+  - Path where to expose UDP metrics
+  - Default: /metrics/udp
+- exporter.metrics-port
+  - Port where to expose metrics
+  - Default: 10009
+- prusalink.scrape-timeout
+  - Timeout in seconds to scrape prusalink metrics in seconds
+  - Default: 10
+- log.level
+  - Log level for zerolog
+  - Default: info
+- udp.ip-override
+  - Override the IP address of the server with this value - if empty then exporter will attempt to load IP address from system
+  - Default: ""
+- udp.listen-address
+  - Address where to expose port for gathering metrics. - format <address>:<port>
+  - Default: 0.0.0.0
+- udp.prefix
+  - Prefix for udp metrics
+  - Default: prusa_
+- udp.extra-metrics
+  - Comma separated list of extra udp metrics to expose
+  - Default: ""
+- udp.all-metrics
+  - Expose all udp metrics. SEVERELY IMPACT CPU CAPABILITIES OF THE PRINTER!
+  - Default: false
+- udp.gcode-enabled
+  - Enable generating and sending metrics gcode
+  - Default: true
 
 ### Dashboards
 
@@ -82,56 +187,16 @@ I've prepared cozy [dashboards](docs/), but this being Prometheus, you can do wh
 
 # Roadmap
 
-omega2
-- [x] working udp metrics with influx2cortex proxy
-- [x] working PrusaLink metrics
-- [x] development restarted 🎉
-
-alpha1
-- [x] transfering prusa_metrics_handler codebase into prusa_exporter
-- [x] working UDP metrics via influxdb_exporter
-- [x] Core One / MK4S dashboard
-
-alpha2
-- [x] working UDP metrics without any external tool
-- [x] split UDP and PrusaLink metrics
-- [x] update Go to 1.24
-- [x] drop Einsy support
-- [x] overall optimization
-- [x] update dashboard for Core One / MK4S
-
-alpha3
-- [x] auto enable syslog metrics
-- [x] create FAQ
-- [x] ~~check if the address from the udp and prusalink metrics are the same~~ - there is an issue in the firmware. Even though printer should sent metrics via selected network, it can sent them via ESP32 if it's connected. And vice versa - it can sent metrics via Ethernet if the ESP32 is selected as network adapter.
-- [x] ~~compress image of print~~ - just use Loki for image
-- [x] ~~rename udp metrics~~ - keeping old names for compatibility with metrics_handler
-- [x] check PrusaLink metrics - done by ([imax9000](https://github.com/imax9000)) 
-
-alpha4
-- [x] further optimization
-- [x] ~~PoC controlling printer via Grafana~~ - PoC work but it's flawed - scrapping - [prusa_proxy](https://github.com/pubeldev/prusa_proxy) - I've used skeleton in sending metrics gcode
-- [x] Mini dashboard
-- [x] MKx dashboard
-- [x] Core One dashboard
-- [x] XL dashboard
-
-beta1
-- [x] ~~start testing at Raspberry Pi 4 (if not feasible then 5)~~ - not going to build Raspberry Pi image
-- [x] create tests
-- [x] reenable tests in pipeline
-
-beta2
-- [x] improve stability and optimize code
-- [x] ~~finalize controlling printer via Grafana~~
-
 rc1
 - [x] create overview dashboard for all printers in system
 - [ ] Grafana provisioning
 - [ ] further testing
 
-final
+final 2.0.0
 - [ ] 🎉
+
+2.1.0
+- [ ] Easier deploy without internet
 
 # FAQ
 
