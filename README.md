@@ -4,6 +4,8 @@
 ![tag](https://img.shields.io/github/v/tag/pstrobl96/prusa_exporter) 
 ![license](https://img.shields.io/github/license/pstrobl96/prusa_exporter)
 
+# Table of Contents
+- [Table of Contents](#table-of-contents)
 - [prusa\_exporter](#prusa_exporter)
     - [Running](#running)
       - [Docker](#docker)
