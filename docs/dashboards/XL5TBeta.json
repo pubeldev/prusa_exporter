@@ -1341,7 +1341,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "${ds_loki}"
+        "uid": "${DS_LOKI}"
       },
       "gridPos": {
         "h": 7,
@@ -4544,7 +4544,7 @@
         "current": {},
         "hide": 1,
         "label": "Prometheus",
-        "name": "ds_prometheus",
+        "name": "DS_PROMETHEUS",
         "options": [],
         "query": "prometheus",
         "refresh": 1,
@@ -4555,7 +4555,7 @@
         "current": {},
         "hide": 1,
         "label": "Loki",
-        "name": "ds_loki",
+        "name": "DS_LOKI",
         "options": [],
         "query": "loki",
         "refresh": 1,
@@ -4566,7 +4566,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "${ds_prometheus}"
+          "uid": "${DS_PROMETHEUS}"
         },
         "definition": "label_values(prusa_up{printer_model=\"XL\"},printer_address)",
         "label": "Printer",

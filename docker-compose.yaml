@@ -12,7 +12,7 @@ services:
     container_name: grafana
     restart: unless-stopped
     environment:
-      - GF_PLUGINS_PREINSTALL=dalvany-image-panel, grafana-xyzchart-panel, grafana-polystat-panel, yesoreyeram-infinity-datasource, volkovlabs-image-panel, betatech-qrcode-panel
+      - GF_PLUGINS_PREINSTALL=volkovlabs-image-panel, betatech-qrcode-panel
       - GF_DASHBOARDS_MIN_REFRESH_INTERVAL=1s
     depends_on:
       - prometheus
@@ -50,7 +50,7 @@ services:
       - pubel
  
   prometheus:
-    image: prom/prometheus:v3.7.2
+    image: prom/prometheus:v3.7.3
     container_name: prometheus
     restart: always
     command:
@@ -65,7 +65,7 @@ services:
       - pubel
 
   loki:
-    image: grafana/loki:3.5.7
+    image: grafana/loki:3.5.8
     container_name: loki
     restart: unless-stopped
     command: -config.file=/etc/loki/loki.yaml
