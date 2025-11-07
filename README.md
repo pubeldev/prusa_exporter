@@ -193,7 +193,7 @@ rc1
 - [x] further testing
 
 rc2
-- [] even more testing
+- [ ] even more testing
 
 final 2.0.0
 - [ ] 🎉
@@ -203,6 +203,7 @@ final 2.0.0
 - [ ] If possible - removal of printer_model in configuration
 - [ ] Move list of UDP metrics to separate file
 - [ ] Export udp enable g-code to the local filesystem
+- [ ] SL printer support
 - [ ] etc... list is not final
 
 # FAQ
