@@ -62,7 +62,7 @@ By default at start of the exporter will send the configuration gcode to the pri
   - You can select all but it has actual impact on performance so choose wisely
 
 
-Of course you can configure metrics with gcode as well - that gcode can be found [here](docs/examples/syslog/config_full.gcode). This list is not complete because there are constant changes in [Prusa-Firmware-Buddy](github.com/prusa3d/Prusa-Firmware-Buddy/). 
+Of course you can configure metrics with gcode as well - that gcode can be found [here](docs/config/config_full.gcode). This list is not complete because there are constant changes in [Prusa-Firmware-Buddy](github.com/prusa3d/Prusa-Firmware-Buddy/). 
 
 ### How to manually activate UDP metrics
 
@@ -163,31 +163,31 @@ prusa_exporter-windows-amd64.exe
 
 ## Dashboards
 
-I've prepared cozy [dashboards](docs/), but this being Prometheus, you can do whatever you want. Fun fact, Mini dashboard works for MKx and Core One and MKx dashboard works for Core One but not vice versa. XL dashboard is specific for XL.
+I've prepared cozy [dashboards](docs/dashboards/), but this being Prometheus, you can do whatever you want. Fun fact, Mini dashboard works for MKx and Core One and MKx dashboard works for Core One but not vice versa. XL dashboard is specific for XL.
 
 ### Prusa MKx (MK3.5(S) / MK3.9(S) / MK4(S))
 ![mkxdashboard](docs/readme/mkx_dashboard.png)
-[Dashboard](docs/MKx.json)
+[Dashboard](docs/dashboards/MKx.json)
 
 ### Prusa Core One
 ![c1dashboard](docs/readme/c1_dashboard.png)
-[Dashboard](docs/C1.json)
+[Dashboard](docs/dashboards/C1.json)
 
 ### Prusa XL
 ![xldashboard](docs/readme/xl_dashboard.png)
-[Dashboard](docs/XL.json)
+[Dashboard](docs/dashboards/XL.json)
 
 ### Prusa XL - fancy version for 5 Tools (BETA and WIP)
 ![xl5tbetadashboard](docs/readme/xl5tbeta_dashboard.gif)
-[Dashboard](docs/XL5TBeta.json)
+[Dashboard](docs/dashboards/XL5TBeta.json)
 
 ### Prusa Mini
 ![minidashboard](docs/readme/mini_dashboard.png)
-[Dashboard](docs/Mini.json)
+[Dashboard](docs/dashboards/Mini.json)
 
 ### General Overview
 ![minidashboard](docs/readme/overview_dashboard.png)
-[Dashboard](docs/Overview.json)
+[Dashboard](docs/dashboards/Overview.json)
 
 # Roadmap
 
