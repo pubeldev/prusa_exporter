@@ -2,13 +2,65 @@ package udp
 
 import (
 	"fmt"
+	"net"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/rs/zerolog/log"
 	"gopkg.in/mcuadros/go-syslog.v2/format"
 )
+
+// AddrResolver maps syslog source IPs to canonical printer_address label
+// values. Configured addresses (from prusa.yml) take priority over reverse DNS.
+// Populate with SetAddress before starting any goroutine that calls Resolve.
+type AddrResolver struct {
+	// addresses is written only at startup (before concurrent Resolve calls).
+	addresses map[string]string
+	// cache stores DNS-fallback results for IPs not in addresses.
+	cache sync.Map
+}
+
+// NewAddrResolver returns a ready-to-use AddrResolver.
+func NewAddrResolver() *AddrResolver {
+	return &AddrResolver{addresses: make(map[string]string)}
+}
+
+// SetAddress registers the canonical label for a printer IP.
+// Must be called before any concurrent Resolve calls.
+func (r *AddrResolver) SetAddress(ip, address string) {
+	r.addresses[ip] = address
+}
+
+// Resolve returns the canonical printer_address label for a syslog source IP.
+// Priority: configured address > reverse DNS short hostname > raw IP.
+// DNS-fallback results are cached after the first lookup.
+func (r *AddrResolver) Resolve(ip string) string {
+	// Configured address always wins — not cached, so a new SetAddress call is
+	// always visible without needing to invalidate any cache.
+	if addr, ok := r.addresses[ip]; ok {
+		return addr
+	}
+	// Check cache for previously resolved DNS-fallback result.
+	if v, ok := r.cache.Load(ip); ok {
+		return v.(string)
+	}
+	// Fall back to reverse DNS short hostname.
+	result := ip
+	names, err := net.LookupAddr(ip)
+	if err == nil && len(names) > 0 {
+		host := strings.TrimSuffix(names[0], ".")
+		if i := strings.IndexByte(host, '.'); i != -1 {
+			host = host[:i]
+		}
+		if host != "" {
+			result = host
+		}
+	}
+	r.cache.Store(ip, result)
+	return result
+}
 
 type point struct {
 	Measurement string
@@ -16,16 +68,22 @@ type point struct {
 	Fields      map[string]interface{} // Use interface{} to handle different field types
 }
 
-func process(data format.LogParts, prefix string) {
+func process(data format.LogParts, prefix string, resolver *AddrResolver) {
 	mac, ip, err := processIdentifiers(data)
 	if err != nil {
 		log.Error().Msg(fmt.Sprintf("Error processing identifiers: %v", err))
 		return
 	}
-	lastPush.WithLabelValues(mac, strings.Split(ip, ":")[0]).Set(float64(time.Now().Unix())) // Set the last push timestamp
+	// Strip port once here; handles both IPv4 (1.2.3.4:port) and IPv6 ([::1]:port).
+	host, _, err := net.SplitHostPort(ip)
+	if err != nil {
+		host = ip // already a bare address
+	}
+	addr := resolver.Resolve(host)
+	lastPush.WithLabelValues(mac, addr).Set(float64(time.Now().Unix())) // Set the last push timestamp
 
 	log.Debug().Msg(fmt.Sprintf("Processing data for printer %s", mac))
-	metrics, err := processMessage(data["message"].(string), mac, prefix, ip)
+	metrics, err := processMessage(data["message"].(string), mac, prefix, addr)
 	if err != nil {
 		log.Error().Msg(fmt.Sprintf("Error processing message: %v", err))
 		return
@@ -58,7 +116,7 @@ func processIdentifiers(data format.LogParts) (string, string, error) {
 	return mac, ip, nil
 }
 
-func processMessage(message string, mac string, prefix string, ip string) ([]string, error) {
+func processMessage(message string, mac string, prefix string, addr string) ([]string, error) {
 	messageSplit := strings.Split(message, "\n")
 
 	if len(messageSplit) == 0 {
@@ -75,7 +133,7 @@ func processMessage(message string, mac string, prefix string, ip string) ([]str
 
 	for i, line := range messageSplit {
 		splitted := strings.Split(line, " ")
-		splitted, err = updateMetric(splitted, prefix, mac, ip)
+		splitted, err = updateMetric(splitted, prefix, mac, addr)
 		if err != nil {
 			log.Error().Msg("Expected error while adding mac label for metric: " + splitted[0] + " error:" + err.Error())
 			continue
@@ -94,12 +152,12 @@ func parseFirstMessage(message string) (string, error) {
 	return strings.Join(firstMsg, " "), nil
 }
 
-func updateMetric(splitted []string, prefix string, mac string, ip string) ([]string, error) {
+func updateMetric(splitted []string, prefix string, mac string, addr string) ([]string, error) {
 	if len(splitted) == 0 {
 		return nil, fmt.Errorf("splitted message is empty")
 	}
 
-	splitted[0] = fmt.Sprintf("%s%s,printer_mac=%s,printer_address=%s", prefix, splitted[0], mac, strings.Split(ip, ":")[0])
+	splitted[0] = fmt.Sprintf("%s%s,printer_mac=%s,printer_address=%s", prefix, splitted[0], mac, addr)
 	return splitted, nil
 }
 

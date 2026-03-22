@@ -53,7 +53,7 @@ func TestMetricsListenerSetup(t *testing.T) {
 		// Use a timeout to prevent hanging
 		done := make(chan bool, 1)
 		go func() {
-			MetricsListener(listenAddr, "test_")
+			MetricsListener(listenAddr, "test_", NewAddrResolver())
 			done <- true
 		}()
 

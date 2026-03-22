@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"net"
 	"net/http"
 	"os"
 	"strconv"
@@ -66,6 +67,27 @@ func Run() {
 	log.Info().Msg("PrusaLink metrics enabled!")
 	collectors = append(collectors, prusalink.NewCollector(config))
 
+	// Register each printer's configured address so UDP metrics use the same
+	// label value as PrusaLink metrics, regardless of whether it's a hostname
+	// (short or FQDN) or an IP address.
+	resolver := udp.NewAddrResolver()
+	for _, p := range config.Printers {
+		// p.Address is host:port — extract just the host before resolving.
+		host, _, err := net.SplitHostPort(p.Address)
+		if err != nil {
+			host = p.Address // no port present
+		}
+		ips, err := net.LookupHost(host)
+		if err != nil {
+			// Unresolvable — register the raw address string as-is.
+			resolver.SetAddress(host, p.Address)
+			continue
+		}
+		for _, ip := range ips {
+			resolver.SetAddress(ip, p.Address)
+		}
+	}
+
 	if *udpGcodeEnabled {
 		prusalink.EnableUDPmetrics(config.Printers)
 	} else {
@@ -74,7 +96,7 @@ func Run() {
 	// starting syslog server
 
 	log.Info().Msg("Syslog server starting at: " + *syslogListenAddress)
-	go udp.MetricsListener(*syslogListenAddress, *udpPrefix)
+	go udp.MetricsListener(*syslogListenAddress, *udpPrefix, resolver)
 	log.Info().Msg("Syslog server ready to receive metrics")
 
 	// registering the prometheus metrics

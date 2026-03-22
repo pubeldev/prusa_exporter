@@ -164,7 +164,7 @@ func TestProcessMessage(t *testing.T) {
 		message  string
 		mac      string
 		prefix   string
-		ip       string
+		addr     string
 		expected int // expected number of metrics
 	}{
 		{
@@ -172,7 +172,7 @@ func TestProcessMessage(t *testing.T) {
 			message:  "12345 temp_noz v=220.5 1637000000",
 			mac:      "ABC123",
 			prefix:   "prusa_",
-			ip:       "192.168.1.100:8514",
+			addr:     "192.168.1.100",
 			expected: 1,
 		},
 		{
@@ -182,14 +182,14 @@ temp_bed v=60.0 1637000000
 fan_speed rpm=1500i 1637000000`,
 			mac:      "ABC123",
 			prefix:   "prusa_",
-			ip:       "192.168.1.100:8514",
+			addr:     "192.168.1.100",
 			expected: 3,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result, err := processMessage(tt.message, tt.mac, tt.prefix, tt.ip)
+			result, err := processMessage(tt.message, tt.mac, tt.prefix, tt.addr)
 			if err != nil {
 				t.Errorf("processMessage() error = %v", err)
 				return
@@ -207,8 +207,8 @@ fan_speed rpm=1500i 1637000000`,
 				if !contains(metric, "printer_mac="+tt.mac) {
 					t.Errorf("processMessage() metric %s should contain mac %s", metric, tt.mac)
 				}
-				if !contains(metric, "printer_address=192.168.1.100") {
-					t.Errorf("processMessage() metric %s should contain IP address", metric)
+				if !contains(metric, "printer_address="+tt.addr) {
+					t.Errorf("processMessage() metric %s should contain address %s", metric, tt.addr)
 				}
 			}
 		})
@@ -277,7 +277,7 @@ func TestUpdateMetric(t *testing.T) {
 		splitted []string
 		prefix   string
 		mac      string
-		ip       string
+		addr     string
 		expected string
 	}{
 		{
@@ -285,7 +285,7 @@ func TestUpdateMetric(t *testing.T) {
 			splitted: []string{"temp_noz", "v=220.5", "1637000000"},
 			prefix:   "prusa_",
 			mac:      "ABC123",
-			ip:       "192.168.1.100:8514",
+			addr:     "192.168.1.100",
 			expected: "prusa_temp_noz,printer_mac=ABC123,printer_address=192.168.1.100",
 		},
 		{
@@ -293,14 +293,14 @@ func TestUpdateMetric(t *testing.T) {
 			splitted: []string{"fan,type=print", "rpm=1500i", "1637000000"},
 			prefix:   "prusa_",
 			mac:      "DEF456",
-			ip:       "10.0.0.5:8514",
+			addr:     "10.0.0.5",
 			expected: "prusa_fan,type=print,printer_mac=DEF456,printer_address=10.0.0.5",
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result, err := updateMetric(tt.splitted, tt.prefix, tt.mac, tt.ip)
+			result, err := updateMetric(tt.splitted, tt.prefix, tt.mac, tt.addr)
 			if err != nil {
 				t.Errorf("updateMetric() error = %v", err)
 				return
@@ -319,7 +319,7 @@ func TestUpdateMetric(t *testing.T) {
 
 	// Test error case
 	t.Run("Empty splitted message", func(t *testing.T) {
-		_, err := updateMetric([]string{}, "prusa_", "ABC123", "192.168.1.100:8514")
+		_, err := updateMetric([]string{}, "prusa_", "ABC123", "192.168.1.100")
 		if err == nil {
 			t.Error("updateMetric() expected error for empty input")
 		}
@@ -424,6 +424,57 @@ func stringContains(s, substr string) bool {
 		}
 	}
 	return false
+}
+
+func TestResolveAddr(t *testing.T) {
+	t.Parallel()
+
+	t.Run("Unresolvable IP returns IP", func(t *testing.T) {
+		t.Parallel()
+		r := NewAddrResolver()
+		ip := "192.0.2.1" // TEST-NET, guaranteed no PTR record
+		result := r.Resolve(ip)
+		if result != ip {
+			t.Errorf("Resolve(%q) = %q, want %q", ip, result, ip)
+		}
+	})
+
+	t.Run("Cached result returned on second call", func(t *testing.T) {
+		t.Parallel()
+		r := NewAddrResolver()
+		ip := "192.0.2.2"
+		r.Resolve(ip)               // populate cache with fallback IP
+		r.cache.Store(ip, "cached-host")
+		result := r.Resolve(ip)
+		if result != "cached-host" {
+			t.Errorf("Resolve() cached call = %q, want %q", result, "cached-host")
+		}
+	})
+
+	t.Run("Configured address takes priority over DNS cache", func(t *testing.T) {
+		t.Parallel()
+		r := NewAddrResolver()
+		ip := "192.0.2.3"
+		r.cache.Store(ip, "stale-cached-value") // simulate stale DNS cache entry
+		r.SetAddress(ip, "prusa-core-one.fritz.box")
+		result := r.Resolve(ip)
+		if result != "prusa-core-one.fritz.box" {
+			t.Errorf("Resolve(%q) = %q, want %q", ip, result, "prusa-core-one.fritz.box")
+		}
+	})
+
+	t.Run("Short hostname and FQDN both work via configured address", func(t *testing.T) {
+		t.Parallel()
+		ip := "192.0.2.4"
+		for _, addr := range []string{"prusa-core-one", "prusa-core-one.fritz.box"} {
+			r := NewAddrResolver()
+			r.SetAddress(ip, addr)
+			result := r.Resolve(ip)
+			if result != addr {
+				t.Errorf("Resolve(%q) with configured %q = %q, want %q", ip, addr, result, addr)
+			}
+		}
+	})
 }
 
 func BenchmarkParseLineProtocol(b *testing.B) {
