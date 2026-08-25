@@ -4,10 +4,6 @@
 ![tag](https://img.shields.io/github/v/tag/pstrobl96/prusa_exporter) 
 ![license](https://img.shields.io/github/license/pstrobl96/prusa_exporter)
 
-<a href="https://buymeacoffee.com/pubeldev" target="_blank" title="buymeacoffee">
-  <img src="https://iili.io/JIYMmUN.gif"  alt="buymeacoffee-animated-badge" style="width: 160px;">
-</a>
-
 # Table of Contents
 - [Table of Contents](#table-of-contents)
 - [prusa\_exporter](#prusa_exporter)
